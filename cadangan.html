@@ -408,6 +408,24 @@
                     <div class="stat-value" id="statLogoVotes">—</div>
                 </div>
             </div>
+            <div class="stat-card">
+                <div class="stat-icon pink">
+                    <div style="font-size:20px;font-weight:800;">M</div>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-label">Cadangan Moto Kelas</div>
+                    <div class="stat-value" id="statMotoCount">—</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon green">
+                    <div style="font-size:20px;font-weight:800;">✓</div>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-label">Jumlah Undian Moto</div>
+                    <div class="stat-value" id="statMotoVotes">—</div>
+                </div>
+            </div>
         </div>
 
         <!-- ===== Cadangan Nama Kelas ===== -->
@@ -439,6 +457,19 @@
             </h2>
             <div class="list-grid" id="logoList">
                 <div class="empty-state">Memuatkan cadangan logo...</div>
+            </div>
+        </div>
+
+        <!-- ===== Cadangan Moto Kelas ===== -->
+        <div class="section-block">
+            <h2 class="section-title">
+                Cadangan Moto Kelas
+                <span class="st-badge amber">
+                    <span id="badgeMoto">0</span> cadangan
+                </span>
+            </h2>
+            <div class="list-grid" id="motoList">
+                <div class="empty-state">Memuatkan cadangan moto kelas...</div>
             </div>
         </div>
     </div>
@@ -658,6 +689,94 @@
         }
 
         // ============================================================
+        // Cadangan Moto Kelas
+        // Collection: cadanganMoto — { motto, matric, createdByName?, createdAt }
+        // Undian: cadanganVotes — { motoId }
+        // ============================================================
+        async function loadMoto() {
+            const motoList = document.getElementById('motoList');
+            const statMotoCount = document.getElementById('statMotoCount');
+            const statMotoVotes = document.getElementById('statMotoVotes');
+            const badgeMoto = document.getElementById('badgeMoto');
+
+            try {
+                const [motoSnap, voteSnap] = await Promise.all([
+                    getDocs(query(collection(db, 'cadanganMoto'), orderBy('createdAt', 'desc'))),
+                    getDocs(collection(db, 'cadanganVotes'))
+                ]);
+
+                const motoVoteCounts = {};
+                voteSnap.forEach(d => {
+                    const vote = d.data();
+                    if (vote.motoId) {
+                        motoVoteCounts[vote.motoId] = (motoVoteCounts[vote.motoId] || 0) + 1;
+                    }
+                });
+
+                badgeMoto.textContent = motoSnap.size;
+                statMotoCount.textContent = motoSnap.size;
+
+                if (motoSnap.empty) {
+                    motoList.innerHTML = '<div class="empty-state">Belum ada cadangan moto kelas.</div>';
+                    statMotoVotes.textContent = '0';
+                    return;
+                }
+
+                const items = [];
+                motoSnap.forEach(d => {
+                    const data = d.data();
+                    items.push({
+                        id: d.id,
+                        ...data,
+                        votes: motoVoteCounts[d.id] || 0
+                    });
+                });
+
+                items.sort((a, b) => b.votes - a.votes);
+                const totalVotes = items.reduce((sum, item) => sum + item.votes, 0);
+                statMotoVotes.textContent = totalVotes;
+
+                const highestVotes = items[0]?.votes || 0;
+
+                motoList.innerHTML = items.map((item, index) => {
+                    const isWinner = index === 0 && item.votes > 0 && item.votes === highestVotes;
+                    return `
+                        <article class="item-card">
+                            <div class="item-head">
+                                <div style="min-width:0;">
+                                    <div class="item-title">${escapeHtml(item.motto || item.moto || item.name || 'Tanpa Moto')}</div>
+                                    <div class="item-sub">
+                                        ${item.createdByName ? 'oleh ' + escapeHtml(item.createdByName) : ''}
+                                        ${item.createdAt ? ' · ' + formatDate(item.createdAt) : ''}
+                                    </div>
+                                </div>
+                                ${isWinner ? `
+                                    <span class="winner-tag">
+                                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/>
+                                        </svg>
+                                        Tertinggi
+                                    </span>
+                                ` : ''}
+                            </div>
+                            <div class="vote-badge ${isWinner ? 'top' : 'amber'}">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/>
+                                </svg>
+                                ${item.votes} undian
+                            </div>
+                        </article>
+                    `;
+                }).join('');
+            } catch (err) {
+                console.error('Load moto error:', err);
+                motoList.innerHTML = '<div class="empty-state">Gagal memuatkan cadangan moto kelas.</div>';
+                statMotoCount.textContent = '—';
+                statMotoVotes.textContent = '—';
+            }
+        }
+
+        // ============================================================
         // Lightbox
         // ============================================================
         const lightbox = document.getElementById('lightbox');
@@ -690,7 +809,8 @@
             const { namaCounts, logoCounts } = await loadVoteCounts();
             await Promise.all([
                 loadNama(namaCounts),
-                loadLogo(logoCounts)
+                loadLogo(logoCounts),
+                loadMoto()
             ]);
         })();
     </script>
