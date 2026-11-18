@@ -937,7 +937,8 @@
                     const v = d.data();
                     if (v.namaId) nama[v.namaId] = (nama[v.namaId] || 0) + 1;
                     if (v.logoId) logo[v.logoId] = (logo[v.logoId] || 0) + 1;
-                    if (v.namaLogoId) namaLogo[v.namaLogoId] = (namaLogo[v.namaLogoId] || 0) + 1;\n                    if (v.motoId) moto[v.motoId] = (moto[v.motoId] || 0) + 1;
+                    if (v.namaLogoId) namaLogo[v.namaLogoId] = (namaLogo[v.namaLogoId] || 0) + 1;
+                    if (v.motoId) moto[v.motoId] = (moto[v.motoId] || 0) + 1;
                 });
                 return { nama, logo, namaLogo, moto };
             } catch (err) {
