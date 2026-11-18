@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Utama — Sistem Tempahan Baju</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #0f172a;
+            --muted: #64748b;
+            --line: #e2e8f0;
+            --card: #ffffff;
+            --brand-1: #6366f1;
+            --brand-2: #8b5cf6;
+            --brand-3: #ec4899;
+            --ok: #10b981;
+            --err: #ef4444;
+            --warn: #f59e0b;
+            --ring: rgba(99, 102, 241, 0.18);
+        }
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            min-height: 100vh;
+            color: var(--ink);
+            background:
+                radial-gradient(1000px 600px at 5% 0%, rgba(99, 102, 241, 0.18), transparent 60%),
+                radial-gradient(900px 600px at 95% 100%, rgba(236, 72, 153, 0.16), transparent 55%),
+                linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+            padding: 24px 20px 80px;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        /* ============ PROFILE BAR ============ */
+        .profile-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 18px 22px;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px -18px rgba(15, 23, 42, 0.25);
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+
+        .profile-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            min-width: 0;
+        }
+
+        .profile-avatar {
+            width: 52px; height: 52px;
+            border-radius: 15px;
+            display: grid; place-items: center;
+            font-size: 18px;
+            font-weight: 800;
+            color: #fff;
+            background: linear-gradient(135deg, var(--brand-1), var(--brand-2) 55%, var(--brand-3));
+            box-shadow: 0 10px 20px -8px rgba(99, 102, 241, 0.55);
+            flex-shrink: 0;
+        }
+
+        .profile-info { min-width: 0; }
+
+        .profile-info .name {
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .profile-info .matric {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 4px;
+            padding: 3px 9px;
+            border-radius: 999px;
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #4338ca;
+            background: #eef2ff;
+            border: 1px solid #c7d2fe;
+            letter-spacing: 0.05em;
+        }
+
+        .btn-logout {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 14px;
+            border-radius: 11px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--muted);
+            background: #fff;
+            border: 1.5px solid var(--line);
+            cursor: pointer;
+            transition: border-color 0.2s, color 0.2s;
+            text-decoration: none;
+        }
+        .btn-logout:hover { border-color: #fecaca; color: #b91c1c; }
+
+        /* ============ SECTION ============ */
+        .section-title {
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin: 0 0 14px 4px;
+        }
+
+        .section-block { margin-bottom: 36px; }
+
+        /* ============ PENERANGAN ============ */
+        .desc-card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            padding: 28px 30px;
+            box-shadow: 0 10px 30px -18px rgba(15, 23, 42, 0.25);
+            line-height: 1.75;
+            font-size: 15px;
+            color: var(--ink);
+        }
+
+        .desc-card .empty-state {
+            text-align: center;
+            color: var(--muted);
+            font-size: 13.5px;
+            font-weight: 500;
+            padding: 20px;
+        }
+
+        .desc-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin: 12px 0;
+            cursor: zoom-in;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: block;
+        }
+        .desc-card img:hover {
+            transform: scale(1.01);
+            box-shadow: 0 10px 30px -12px rgba(15, 23, 42, 0.35);
+        }
+
+        /* ============ CADANGAN KELAS CARD ============ */
+        .cadangan-card {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            padding: 26px 28px;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px -18px rgba(15, 23, 42, 0.25);
+            text-decoration: none;
+            color: inherit;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.25s ease, border-color 0.2s ease;
+        }
+
+        .cadangan-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #f59e0b, #ec4899);
+            opacity: 0;
+            transition: opacity 0.25s;
+        }
+
+        .cadangan-card:hover {
+            transform: translateY(-4px);
+            border-color: #fcd34d;
+            box-shadow: 0 24px 40px -20px rgba(245, 158, 11, 0.4);
+        }
+        .cadangan-card:hover::before { opacity: 1; }
+
+        .cadangan-icon {
+            width: 60px; height: 60px;
+            border-radius: 16px;
+            display: grid; place-items: center;
+            background: linear-gradient(135deg, #fff7ed, #fef3c7);
+            border: 1px solid #fde68a;
+            color: #ea580c;
+            flex-shrink: 0;
+        }
+
+        .cadangan-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .cadangan-content h3 {
+            font-size: 17px;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            margin-bottom: 4px;
+        }
+
+        .cadangan-content p {
+            font-size: 13.5px;
+            color: var(--muted);
+            font-weight: 500;
+            line-height: 1.55;
+        }
+
+        .cadangan-chips {
+            display: flex;
+            gap: 6px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .cadangan-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #9a3412;
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+        }
+
+        .btn-cadangan {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 22px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(135deg, #f59e0b, #ec4899);
+            background-size: 200% 200%;
+            white-space: nowrap;
+            transition: background-position 0.5s ease, transform 0.15s ease, box-shadow 0.2s ease;
+            box-shadow: 0 10px 20px -8px rgba(236, 72, 153, 0.55);
+            flex-shrink: 0;
+        }
+        .cadangan-card:hover .btn-cadangan {
+            background-position: 100% 50%;
+            transform: translateY(-1.5px);
+            box-shadow: 0 14px 24px -10px rgba(236, 72, 153, 0.6);
+        }
+
+        @media (max-width: 640px) {
+            .cadangan-card { flex-direction: column; align-items: flex-start; gap: 16px; padding: 22px; }
+            .btn-cadangan { width: 100%; justify-content: center; }
+        }
+
+        /* ============ GALERI BAJU ============ */
+        .baju-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 18px;
+        }
+
+        @media (max-width: 480px) {
+            .baju-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        }
+
+        .baju-card {
+            position: relative;
+            background: var(--card);
+            border: 2px solid var(--line);
+            border-radius: 18px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+            box-shadow: 0 8px 20px -14px rgba(15, 23, 42, 0.25);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .baju-card:hover {
+            transform: translateY(-4px);
+            border-color: #c7d2fe;
+            box-shadow: 0 20px 36px -18px rgba(99, 102, 241, 0.4);
+        }
+
+        .baju-card.selected {
+            border-color: var(--brand-1);
+            box-shadow: 0 0 0 4px var(--ring), 0 20px 36px -18px rgba(99, 102, 241, 0.5);
+        }
+
+        .baju-card .img-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            background: #f8fafc;
+        }
+
+        .baju-card .img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s;
+            display: block;
+        }
+
+        .baju-card:hover .img-wrap img { transform: scale(1.05); }
+
+        .select-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid #cbd5e1;
+            display: grid;
+            place-items: center;
+            transition: background 0.2s, border-color 0.2s, transform 0.15s;
+            box-shadow: 0 4px 10px -4px rgba(15, 23, 42, 0.3);
+        }
+
+        .select-badge svg { opacity: 0; transition: opacity 0.2s; }
+        .baju-card.selected .select-badge {
+            background: linear-gradient(135deg, var(--brand-1), var(--brand-3));
+            border-color: var(--brand-1);
+        }
+        .baju-card.selected .select-badge svg {
+            opacity: 1;
+            color: #fff;
+        }
+
+        .baju-card .bc-body {
+            padding: 14px 16px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+        }
+
+        .baju-card .bc-name {
+            font-size: 14.5px;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .baju-card .bc-desc {
+            font-size: 12.5px;
+            color: var(--muted);
+            font-weight: 500;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .vote-count {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: auto;
+            padding: 6px 11px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #065f46;
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            align-self: flex-start;
+        }
+
+        .vote-count svg { color: #10b981; }
+
+        .baju-card.selected .vote-count {
+            color: #4338ca;
+            background: #eef2ff;
+            border-color: #c7d2fe;
+        }
+        .baju-card.selected .vote-count svg { color: #6366f1; }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            padding: 30px;
+            text-align: center;
+            border: 1.5px dashed var(--line);
+            border-radius: 16px;
+            color: var(--muted);
+            font-size: 13.5px;
+            font-weight: 500;
+            background: #fafbff;
+        }
+
+        /* ============ BUTTON TEMPAHAN ============ */
+        .cta-section {
+            display: flex;
+            justify-content: center;
+            margin-top: 12px;
+        }
+
+        .btn-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 17px 36px;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 0.01em;
+            color: #fff;
+            text-decoration: none;
+            background: linear-gradient(135deg, var(--brand-1), var(--brand-2) 55%, var(--brand-3));
+            background-size: 200% 200%;
+            box-shadow: 0 16px 30px -12px rgba(99, 102, 241, 0.65);
+            transition: background-position 0.5s ease, transform 0.15s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-2px);
+            background-position: 100% 50%;
+            box-shadow: 0 22px 40px -14px rgba(139, 92, 246, 0.7);
+        }
+
+        /* ============ LIGHTBOX ZOOM ============ */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 0.25s ease;
+        }
+        .lightbox.show { display: flex; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .lightbox-img-wrap {
+            max-width: 95vw;
+            max-height: 90vh;
+            overflow: hidden;
+            border-radius: 12px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 85vh;
+            display: block;
+            border-radius: 12px;
+            user-select: none;
+            transform-origin: center;
+            transition: transform 0.15s ease-out;
+            cursor: grab;
+        }
+        .lightbox img:active { cursor: grabbing; }
+
+        .lightbox-close {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            font-size: 22px;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            transition: background 0.2s;
+            z-index: 1001;
+        }
+        .lightbox-close:hover { background: rgba(255, 255, 255, 0.3); }
+
+        .lightbox-zoom-controls {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            padding: 8px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 1001;
+        }
+        .lightbox-zoom-controls button {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: none;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--ink);
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            font-weight: 800;
+            font-size: 18px;
+            transition: background 0.2s, transform 0.15s;
+        }
+        .lightbox-zoom-controls button:hover { background: #fff; transform: scale(1.05); }
+
+        .lightbox-hint {
+            position: fixed;
+            bottom: 78px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.7);
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+            z-index: 1001;
+        }
+
+        /* ============ TOAST ============ */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            padding: 13px 20px;
+            border-radius: 12px;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #fff;
+            background: #0f172a;
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s, transform 0.25s;
+            z-index: 1100;
+            max-width: 90vw;
+            text-align: center;
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .toast.error { background: #dc2626; }
+        .toast.success { background: #059669; }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 640px) {
+            body { padding: 16px 14px 64px; }
+            .profile-bar { padding: 14px 16px; border-radius: 16px; }
+            .profile-avatar { width: 44px; height: 44px; font-size: 15px; }
+            .profile-info .name { font-size: 14.5px; }
+            .desc-card { padding: 20px 22px; font-size: 14px; }
+            .section-block { margin-bottom: 28px; }
+            .baju-card .bc-body { padding: 10px 12px 12px; }
+            .baju-card .bc-name { font-size: 13px; }
+            .baju-card .bc-desc { font-size: 11.5px; }
+            .btn-cta { padding: 15px 28px; font-size: 15px; width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- ===== Profile bar ===== -->
+        <header class="profile-bar">
+            <div class="profile-left">
+                <div class="profile-avatar" id="profileAvatar">—</div>
+                <div class="profile-info">
+                    <div class="name" id="profileName">Memuatkan...</div>
+                    <div class="matric" id="profileMatric">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="4" width="18" height="16" rx="2"/><line x1="7" y1="9" x2="17" y2="9"/><line x1="7" y1="13" x2="13" y2="13"/>
+                        </svg>
+                        <span id="matricText">—</span>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-logout" id="logoutBtn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+                </svg>
+                Log Keluar
+            </button>
+        </header>
+
+        <!-- ===== 1. Penerangan ===== -->
+        <div class="section-block">
+            <p class="section-title">Penerangan Tempahan Baju</p>
+            <div class="desc-card" id="descCard">
+                <div class="empty-state">Memuatkan penerangan...</div>
+            </div>
+        </div>
+
+        <!-- ===== 2. Cadangan Nama & Logo Kelas (BARU) ===== -->
+        <div class="section-block">
+            <p class="section-title">Cadangan Kelas</p>
+            <a class="cadangan-card" href="cadangan-kelas.html">
+                <div class="cadangan-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V18h6v-1.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z"/>
+                        <path d="M9 22h6"/>
+                        <path d="M10 18h4"/>
+                    </svg>
+                </div>
+                <div class="cadangan-content">
+                    <h3>Cadangan Nama & Logo Kelas</h3>
+                    <p>Sumbangkan idea nama kelas dan reka bentuk logo kelas anda. Cadangan terbaik akan dipilih!</p>
+                    <div class="cadangan-chips">
+                        <span class="cadangan-chip">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/>
+                            </svg>
+                            Nama Kelas
+                        </span>
+                        <span class="cadangan-chip">
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+                            </svg>
+                            Logo Kelas
+                        </span>
+                    </div>
+                </div>
+                <span class="btn-cadangan">
+                    Buat Cadangan
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                    </svg>
+                </span>
+            </a>
+        </div>
+
+        <!-- ===== 3. Galeri pilihan baju (voting) ===== -->
+        <div class="section-block">
+            <p class="section-title">Pilih Reka Bentuk Baju Kegemaran Anda</p>
+            <div class="baju-grid" id="bajuGrid">
+                <div class="empty-state">Memuatkan pilihan baju...</div>
+            </div>
+        </div>
+
+        <!-- ===== 4. Button ke halaman tempahan ===== -->
+        <div class="cta-section">
+            <a class="btn-cta" href="borang-tempahan.html">
+                Buat Tempahan Sekarang
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+
+    <!-- ===== Lightbox ===== -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Tutup">×</button>
+        <div class="lightbox-img-wrap">
+            <img id="lightboxImg" src="" alt="Zoom">
+        </div>
+        <div class="lightbox-hint">Skrol / cubit untuk zoom · Tarik untuk pan</div>
+        <div class="lightbox-zoom-controls">
+            <button id="zoomOut" aria-label="Zoom keluar">−</button>
+            <button id="zoomReset" aria-label="Reset">⟲</button>
+            <button id="zoomIn" aria-label="Zoom masuk">+</button>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import {
+            getFirestore, doc, getDoc, collection, getDocs,
+            query, where, runTransaction, serverTimestamp, orderBy, onSnapshot
+        } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        // ==== Firebase Config ====
+        const firebaseConfig = {
+            apiKey: "AIzaSyCByV68jqkMNmIlslrG9bxzbBo6qGYVT4c",
+            authDomain: "tempahan-baju-3fd4b.firebaseapp.com",
+            projectId: "tempahan-baju-3fd4b",
+            storageBucket: "tempahan-baju-3fd4b.firebasestorage.app",
+            messagingSenderId: "851807692918",
+            appId: "1:851807692918:web:22e7f2a1ff3222def3d757",
+            measurementId: "G-HYM6W4JNS9"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // ==== Sesi semak ====
+        const sessionRaw = sessionStorage.getItem('loggedInUser');
+        if (!sessionRaw) {
+            window.location.href = 'index.html';
+        }
+        const session = JSON.parse(sessionRaw || '{}');
+
+        // ==== Refs ====
+        const profileName = document.getElementById('profileName');
+        const profileMatric = document.getElementById('matricText');
+        const profileAvatar = document.getElementById('profileAvatar');
+        const descCard = document.getElementById('descCard');
+        const bajuGrid = document.getElementById('bajuGrid');
+        const toast = document.getElementById('toast');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        function showToast(msg, type = 'info') {
+            toast.textContent = msg;
+            toast.className = 'toast show ' + (type === 'error' ? 'error' : type === 'success' ? 'success' : '');
+            clearTimeout(showToast._t);
+            showToast._t = setTimeout(() => toast.classList.remove('show'), 3500);
+        }
+
+        function escapeHtml(s) {
+            return String(s ?? '').replace(/[&<>"']/g, c => ({
+                '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+            }[c]));
+        }
+
+        function initials(name) {
+            return (name || '?').trim().split(/\s+/).slice(0, 2).map(w => w[0]).join('').toUpperCase();
+        }
+
+        profileName.textContent = session.name || 'Pengguna';
+        profileMatric.textContent = session.matric || '—';
+        profileAvatar.textContent = initials(session.name);
+
+        logoutBtn.addEventListener('click', () => {
+            sessionStorage.removeItem('loggedInUser');
+            window.location.href = 'index.html';
+        });
+
+        // ============================================================
+        // BAHAGIAN 1 — Penerangan
+        // ============================================================
+        async function loadDescription() {
+            try {
+                const snap = await getDoc(doc(db, 'penerangan', 'utama'));
+                if (!snap.exists()) {
+                    descCard.innerHTML = '<div class="empty-state">Belum ada penerangan daripada admin.</div>';
+                    return;
+                }
+                const d = snap.data();
+                const wrap = document.createElement('div');
+                wrap.innerHTML = d.html || '';
+                if (d.fontFamily) wrap.style.fontFamily = d.fontFamily;
+                if (d.fontSize) wrap.style.fontSize = d.fontSize + 'px';
+                descCard.innerHTML = '';
+                descCard.appendChild(wrap);
+
+                wrap.querySelectorAll('img').forEach(img => {
+                    img.style.cursor = 'zoom-in';
+                    img.addEventListener('click', () => openLightbox(img.src));
+                });
+            } catch (err) {
+                console.error('Load description error:', err);
+                descCard.innerHTML = '<div class="empty-state">Gagal memuatkan penerangan.</div>';
+            }
+        }
+
+        // ============================================================
+        // BAHAGIAN 2 — Galeri baju & voting
+        // ============================================================
+        let selectedBajuId = null;
+        let userVoteId = null;
+        let allBaju = [];
+
+        async function loadVoteCounts() {
+            try {
+                const votesSnap = await getDocs(collection(db, 'votes'));
+                const counts = {};
+                votesSnap.forEach(d => {
+                    const v = d.data();
+                    if (v.bajuId) counts[v.bajuId] = (counts[v.bajuId] || 0) + 1;
+                });
+                return counts;
+            } catch (err) {
+                console.error('Load votes error:', err);
+                return {};
+            }
+        }
+
+        async function loadBaju() {
+            try {
+                const q = query(collection(db, 'pilihanBaju'), orderBy('createdAt', 'desc'));
+                const snap = await getDocs(q);
+
+                if (snap.empty) {
+                    bajuGrid.innerHTML = '<div class="empty-state">Belum ada pilihan baju. Sila hubungi admin.</div>';
+                    return;
+                }
+
+                allBaju = [];
+                snap.forEach(d => allBaju.push({ id: d.id, ...d.data() }));
+
+                const counts = await loadVoteCounts();
+
+                const voteSnap = await getDoc(doc(db, 'votes', session.matric));
+                if (voteSnap.exists()) {
+                    userVoteId = voteSnap.data().bajuId;
+                    selectedBajuId = userVoteId;
+                }
+
+                renderBaju(counts);
+            } catch (err) {
+                console.error('Load baju error:', err);
+                bajuGrid.innerHTML = '<div class="empty-state">Gagal memuatkan senarai baju.</div>';
+            }
+        }
+
+        function renderBaju(counts) {
+            bajuGrid.innerHTML = allBaju.map(b => {
+                const count = counts[b.id] || 0;
+                const isSelected = b.id === selectedBajuId;
+                return `
+                    <article class="baju-card ${isSelected ? 'selected' : ''}" data-id="${b.id}">
+                        <div class="img-wrap">
+                            <img src="${escapeHtml(b.imageUrl || '')}" alt="${escapeHtml(b.name || '')}" loading="lazy">
+                            <div class="select-badge">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="bc-body">
+                            <div class="bc-name" title="${escapeHtml(b.name || '')}">${escapeHtml(b.name || 'Tanpa Nama')}</div>
+                            <div class="bc-desc">${escapeHtml(b.description || '')}</div>
+                            <div class="vote-count">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/>
+                                </svg>
+                                <span class="count-num">${count}</span> undian
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+
+            bajuGrid.querySelectorAll('.baju-card').forEach(card => {
+                card.addEventListener('click', () => handleVote(card.dataset.id));
+            });
+        }
+
+        async function handleVote(bajuId) {
+            if (bajuId === selectedBajuId && userVoteId) {
+                showToast('Anda sudah memilih baju ini.', 'info');
+                return;
+            }
+
+            try {
+                await runTransaction(db, async (tx) => {
+                    const voteRef = doc(db, 'votes', session.matric);
+                    const voteSnap = await tx.get(voteRef);
+
+                    if (voteSnap.exists()) {
+                        tx.update(voteRef, {
+                            bajuId,
+                            updatedAt: serverTimestamp()
+                        });
+                    } else {
+                        tx.set(voteRef, {
+                            matric: session.matric,
+                            name: session.name || '',
+                            bajuId,
+                            createdAt: serverTimestamp()
+                        });
+                    }
+                });
+
+                userVoteId = bajuId;
+                selectedBajuId = bajuId;
+
+                showToast('Undian anda telah direkodkan.', 'success');
+
+                const counts = await loadVoteCounts();
+                renderBaju(counts);
+            } catch (err) {
+                console.error('Vote error:', err);
+                showToast('Gagal merekod undian: ' + err.message, 'error');
+            }
+        }
+
+        // ============================================================
+        // LIGHTBOX
+        // ============================================================
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxClose = document.getElementById('lightboxClose');
+        const zoomIn = document.getElementById('zoomIn');
+        const zoomOut = document.getElementById('zoomOut');
+        const zoomReset = document.getElementById('zoomReset');
+
+        let scale = 1;
+        let tx = 0, ty = 0;
+        let isDragging = false;
+        let dragStart = { x: 0, y: 0 };
+        let lastTouchDist = 0;
+        let startScale = 1;
+
+        function applyTransform() {
+            lightboxImg.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+        }
+
+        function openLightbox(src) {
+            lightboxImg.src = src;
+            scale = 1; tx = 0; ty = 0;
+            applyTransform();
+            lightbox.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('show');
+            document.body.style.overflow = '';
+            lightboxImg.src = '';
+        }
+
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('show')) closeLightbox();
+        });
+
+        zoomIn.addEventListener('click', () => {
+            scale = Math.min(5, scale + 0.3);
+            applyTransform();
+        });
+        zoomOut.addEventListener('click', () => {
+            scale = Math.max(0.3, scale - 0.3);
+            applyTransform();
+        });
+        zoomReset.addEventListener('click', () => {
+            scale = 1; tx = 0; ty = 0;
+            applyTransform();
+        });
+
+        lightbox.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            if (e.deltaY < 0) scale = Math.min(5, scale + 0.15);
+            else scale = Math.max(0.3, scale - 0.15);
+            applyTransform();
+        }, { passive: false });
+
+        lightboxImg.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            dragStart = { x: e.clientX - tx, y: e.clientY - ty };
+        });
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            tx = e.clientX - dragStart.x;
+            ty = e.clientY - dragStart.y;
+            applyTransform();
+        });
+        window.addEventListener('mouseup', () => { isDragging = false; });
+
+        lightbox.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 2) {
+                const dx = e.touches[0].clientX - e.touches[1].clientX;
+                const dy = e.touches[0].clientY - e.touches[1].clientY;
+                lastTouchDist = Math.hypot(dx, dy);
+                startScale = scale;
+            } else if (e.touches.length === 1) {
+                isDragging = true;
+                dragStart = {
+                    x: e.touches[0].clientX - tx,
+                    y: e.touches[0].clientY - ty
+                };
+            }
+        }, { passive: true });
+
+        lightbox.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 2) {
+                e.preventDefault();
+                const dx = e.touches[0].clientX - e.touches[1].clientX;
+                const dy = e.touches[0].clientY - e.touches[1].clientY;
+                const dist = Math.hypot(dx, dy);
+                if (lastTouchDist > 0) {
+                    scale = Math.max(0.3, Math.min(5, startScale * (dist / lastTouchDist)));
+                    applyTransform();
+                }
+            } else if (e.touches.length === 1 && isDragging) {
+                e.preventDefault();
+                tx = e.touches[0].clientX - dragStart.x;
+                ty = e.touches[0].clientY - dragStart.y;
+                applyTransform();
+            }
+        }, { passive: false });
+
+        lightbox.addEventListener('touchend', () => {
+            isDragging = false;
+            lastTouchDist = 0;
+        });
+
+        // ============================================================
+        // Real-time update undian
+        // ============================================================
+        function listenVotes() {
+            try {
+                onSnapshot(collection(db, 'votes'), async () => {
+                    const counts = await loadVoteCounts();
+                    document.querySelectorAll('.baju-card').forEach(card => {
+                        const id = card.dataset.id;
+                        const el = card.querySelector('.count-num');
+                        if (el) el.textContent = counts[id] || 0;
+                    });
+                });
+            } catch (err) {
+                console.error('Listen votes error:', err);
+            }
+        }
+
+        // INIT
+        loadDescription();
+        loadBaju().then(() => listenVotes());
+    </script>
+</body>
+</html>
