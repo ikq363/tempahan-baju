@@ -52,7 +52,7 @@
             border: 1px solid var(--line);
             border-radius: 20px;
             box-shadow: 0 10px 30px -18px rgba(15, 23, 42, 0.25);
-            margin-bottom: 28px;
+            margin-bottom: 24px;
             flex-wrap: wrap;
         }
 
@@ -125,43 +125,108 @@
             letter-spacing: 0.12em;
             text-transform: uppercase;
             color: var(--muted);
-            margin: 0 0 14px 4px;
+            margin: 0 0 12px 4px;
         }
 
-        .section-block { margin-bottom: 36px; }
+        .section-block { margin-bottom: 32px; }
 
-        /* ============ PENERANGAN ============ */
+        /* ============ PENERANGAN (compact) ============ */
+        .desc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 14px;
+        }
+
+        @media (max-width: 520px) {
+            .desc-grid { grid-template-columns: 1fr; }
+        }
+
         .desc-card {
             background: var(--card);
             border: 1px solid var(--line);
-            border-radius: 20px;
-            padding: 28px 30px;
-            box-shadow: 0 10px 30px -18px rgba(15, 23, 42, 0.25);
-            line-height: 1.75;
-            font-size: 15px;
-            color: var(--ink);
+            border-radius: 16px;
+            padding: 18px 20px;
+            box-shadow: 0 6px 20px -14px rgba(15, 23, 42, 0.25);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
         }
 
-        .desc-card .empty-state {
-            text-align: center;
-            color: var(--muted);
+        .desc-card:hover {
+            border-color: #c7d2fe;
+            box-shadow: 0 14px 30px -18px rgba(99, 102, 241, 0.35);
+        }
+
+        .desc-card-head {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .desc-card-icon {
+            width: 32px; height: 32px;
+            border-radius: 9px;
+            display: grid; place-items: center;
+            background: #eef2ff;
+            color: #4f46e5;
+            flex-shrink: 0;
+        }
+
+        .desc-card h3 {
+            font-size: 14.5px;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            line-height: 1.35;
+            word-break: break-word;
+        }
+
+        .desc-card-date {
+            font-size: 11px;
+            color: #94a3b8;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .desc-card-body {
             font-size: 13.5px;
-            font-weight: 500;
-            padding: 20px;
+            line-height: 1.65;
+            color: #334155;
+            max-height: 220px;
+            overflow-y: auto;
+            padding-right: 4px;
+            scrollbar-width: thin;
         }
 
-        .desc-card img {
+        .desc-card-body::-webkit-scrollbar { width: 5px; }
+        .desc-card-body::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+
+        .desc-card-body img {
             max-width: 100%;
             height: auto;
-            border-radius: 12px;
-            margin: 12px 0;
+            border-radius: 8px;
+            margin: 8px 0;
             cursor: zoom-in;
-            transition: transform 0.2s, box-shadow 0.2s;
             display: block;
+            transition: transform 0.2s;
         }
-        .desc-card img:hover {
-            transform: scale(1.01);
-            box-shadow: 0 10px 30px -12px rgba(15, 23, 42, 0.35);
+        .desc-card-body img:hover { transform: scale(1.01); }
+
+        /* supaya teks dari admin tak terlalu besar */
+        .desc-card-body p { margin: 0 0 8px; }
+        .desc-card-body p:last-child { margin-bottom: 0; }
+        .desc-card-body ul, .desc-card-body ol { margin: 6px 0 8px 20px; }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            padding: 22px;
+            text-align: center;
+            border: 1.5px dashed var(--line);
+            border-radius: 14px;
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 500;
+            background: #fafbff;
         }
 
         /* ============ CADANGAN KELAS CARD ============ */
@@ -169,12 +234,12 @@
             position: relative;
             display: flex;
             align-items: center;
-            gap: 22px;
-            padding: 26px 28px;
+            gap: 18px;
+            padding: 20px 22px;
             background: var(--card);
             border: 1px solid var(--line);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px -18px rgba(15, 23, 42, 0.25);
+            border-radius: 18px;
+            box-shadow: 0 6px 20px -14px rgba(15, 23, 42, 0.25);
             text-decoration: none;
             color: inherit;
             overflow: hidden;
@@ -192,15 +257,15 @@
         }
 
         .cadangan-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-3px);
             border-color: #fcd34d;
-            box-shadow: 0 24px 40px -20px rgba(245, 158, 11, 0.4);
+            box-shadow: 0 18px 34px -20px rgba(245, 158, 11, 0.4);
         }
         .cadangan-card:hover::before { opacity: 1; }
 
         .cadangan-icon {
-            width: 60px; height: 60px;
-            border-radius: 16px;
+            width: 50px; height: 50px;
+            border-radius: 14px;
             display: grid; place-items: center;
             background: linear-gradient(135deg, #fff7ed, #fef3c7);
             border: 1px solid #fde68a;
@@ -214,23 +279,23 @@
         }
 
         .cadangan-content h3 {
-            font-size: 17px;
+            font-size: 15.5px;
             font-weight: 800;
             letter-spacing: -0.01em;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
         }
 
         .cadangan-content p {
-            font-size: 13.5px;
+            font-size: 13px;
             color: var(--muted);
             font-weight: 500;
-            line-height: 1.55;
+            line-height: 1.5;
         }
 
         .cadangan-chips {
             display: flex;
             gap: 6px;
-            margin-top: 10px;
+            margin-top: 8px;
             flex-wrap: wrap;
         }
 
@@ -238,9 +303,9 @@
             display: inline-flex;
             align-items: center;
             gap: 5px;
-            padding: 4px 10px;
+            padding: 3px 9px;
             border-radius: 999px;
-            font-size: 11.5px;
+            font-size: 11px;
             font-weight: 700;
             color: #9a3412;
             background: #fff7ed;
@@ -251,26 +316,26 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 12px 22px;
-            border-radius: 12px;
-            font-size: 14px;
+            padding: 11px 20px;
+            border-radius: 11px;
+            font-size: 13.5px;
             font-weight: 700;
             color: #fff;
             background: linear-gradient(135deg, #f59e0b, #ec4899);
             background-size: 200% 200%;
             white-space: nowrap;
             transition: background-position 0.5s ease, transform 0.15s ease, box-shadow 0.2s ease;
-            box-shadow: 0 10px 20px -8px rgba(236, 72, 153, 0.55);
+            box-shadow: 0 8px 18px -8px rgba(236, 72, 153, 0.55);
             flex-shrink: 0;
         }
         .cadangan-card:hover .btn-cadangan {
             background-position: 100% 50%;
-            transform: translateY(-1.5px);
-            box-shadow: 0 14px 24px -10px rgba(236, 72, 153, 0.6);
+            transform: translateY(-1px);
+            box-shadow: 0 12px 22px -10px rgba(236, 72, 153, 0.6);
         }
 
         @media (max-width: 640px) {
-            .cadangan-card { flex-direction: column; align-items: flex-start; gap: 16px; padding: 22px; }
+            .cadangan-card { flex-direction: column; align-items: flex-start; gap: 14px; padding: 20px; }
             .btn-cadangan { width: 100%; justify-content: center; }
         }
 
@@ -404,23 +469,11 @@
         }
         .baju-card.selected .vote-count svg { color: #6366f1; }
 
-        .empty-state {
-            grid-column: 1 / -1;
-            padding: 30px;
-            text-align: center;
-            border: 1.5px dashed var(--line);
-            border-radius: 16px;
-            color: var(--muted);
-            font-size: 13.5px;
-            font-weight: 500;
-            background: #fafbff;
-        }
-
         /* ============ BUTTON TEMPAHAN ============ */
         .cta-section {
             display: flex;
             justify-content: center;
-            margin-top: 12px;
+            margin-top: 8px;
         }
 
         .btn-cta {
@@ -428,9 +481,9 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            padding: 17px 36px;
+            padding: 16px 34px;
             border-radius: 16px;
-            font-size: 16px;
+            font-size: 15.5px;
             font-weight: 800;
             letter-spacing: 0.01em;
             color: #fff;
@@ -578,8 +631,10 @@
             .profile-bar { padding: 14px 16px; border-radius: 16px; }
             .profile-avatar { width: 44px; height: 44px; font-size: 15px; }
             .profile-info .name { font-size: 14.5px; }
-            .desc-card { padding: 20px 22px; font-size: 14px; }
-            .section-block { margin-bottom: 28px; }
+            .section-block { margin-bottom: 26px; }
+            .desc-card { padding: 16px 17px; border-radius: 14px; }
+            .desc-card h3 { font-size: 13.5px; }
+            .desc-card-body { font-size: 13px; max-height: 180px; }
             .baju-card .bc-body { padding: 10px 12px 12px; }
             .baju-card .bc-name { font-size: 13px; }
             .baju-card .bc-desc { font-size: 11.5px; }
@@ -612,20 +667,20 @@
             </button>
         </header>
 
-        <!-- ===== 1. Penerangan ===== -->
+        <!-- ===== 1. Penerangan (semua dari admin) ===== -->
         <div class="section-block">
             <p class="section-title">Penerangan Tempahan Baju</p>
-            <div class="desc-card" id="descCard">
+            <div class="desc-grid" id="descGrid">
                 <div class="empty-state">Memuatkan penerangan...</div>
             </div>
         </div>
 
-        <!-- ===== 2. Cadangan Nama & Logo Kelas (BARU) ===== -->
+        <!-- ===== 2. Cadangan Nama & Logo Kelas ===== -->
         <div class="section-block">
             <p class="section-title">Cadangan Kelas</p>
             <a class="cadangan-card" href="cadangan-kelas.html">
                 <div class="cadangan-icon">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V18h6v-1.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z"/>
                         <path d="M9 22h6"/>
                         <path d="M10 18h4"/>
@@ -633,7 +688,7 @@
                 </div>
                 <div class="cadangan-content">
                     <h3>Cadangan Nama & Logo Kelas</h3>
-                    <p>Sumbangkan idea nama kelas dan reka bentuk logo kelas anda. Cadangan terbaik akan dipilih!</p>
+                    <p>Sumbangkan idea nama kelas dan reka bentuk logo kelas anda.</p>
                     <div class="cadangan-chips">
                         <span class="cadangan-chip">
                             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
@@ -727,7 +782,7 @@
         const profileName = document.getElementById('profileName');
         const profileMatric = document.getElementById('matricText');
         const profileAvatar = document.getElementById('profileAvatar');
-        const descCard = document.getElementById('descCard');
+        const descGrid = document.getElementById('descGrid');
         const bajuGrid = document.getElementById('bajuGrid');
         const toast = document.getElementById('toast');
         const logoutBtn = document.getElementById('logoutBtn');
@@ -759,30 +814,67 @@
         });
 
         // ============================================================
-        // BAHAGIAN 1 — Penerangan
+        // BAHAGIAN 1 — Penerangan (BANYAK, COMPACT)
         // ============================================================
-        async function loadDescription() {
+        async function loadDescriptions() {
             try {
-                const snap = await getDoc(doc(db, 'penerangan', 'utama'));
-                if (!snap.exists()) {
-                    descCard.innerHTML = '<div class="empty-state">Belum ada penerangan daripada admin.</div>';
+                const q = query(collection(db, 'penerangan'), orderBy('createdAt', 'desc'));
+                const snap = await getDocs(q);
+
+                if (snap.empty) {
+                    descGrid.innerHTML = '<div class="empty-state">Belum ada penerangan daripada admin.</div>';
                     return;
                 }
-                const d = snap.data();
-                const wrap = document.createElement('div');
-                wrap.innerHTML = d.html || '';
-                if (d.fontFamily) wrap.style.fontFamily = d.fontFamily;
-                if (d.fontSize) wrap.style.fontSize = d.fontSize + 'px';
-                descCard.innerHTML = '';
-                descCard.appendChild(wrap);
 
-                wrap.querySelectorAll('img').forEach(img => {
-                    img.style.cursor = 'zoom-in';
-                    img.addEventListener('click', () => openLightbox(img.src));
+                descGrid.innerHTML = '';
+
+                snap.docs.forEach(d => {
+                    const x = d.data();
+                    const date = x.createdAt?.toDate ? x.createdAt.toDate().toLocaleDateString('ms-MY', { day:'numeric', month:'short', year:'numeric' }) : '';
+
+                    const card = document.createElement('article');
+                    card.className = 'desc-card';
+
+                    // Head
+                    const head = document.createElement('div');
+                    head.className = 'desc-card-head';
+                    head.innerHTML = `
+                        <div class="desc-card-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+                            </svg>
+                        </div>
+                        <div style="min-width:0;">
+                            <h3>${escapeHtml(x.title || 'Tanpa Tajuk')}</h3>
+                            ${date ? `<div class="desc-card-date">${date}</div>` : ''}
+                        </div>
+                    `;
+
+                    // Body
+                    const body = document.createElement('div');
+                    body.className = 'desc-card-body';
+                    // hadkan saiz font supaya tak gedabak walaupun admin set besar
+                    body.style.fontSize = Math.min(Number(x.fontSize) || 13.5, 15) + 'px';
+                    if (x.fontFamily) body.style.fontFamily = x.fontFamily;
+                    body.innerHTML = x.html || '';
+
+                    // Override saiz imej supaya tak terlalu besar
+                    body.querySelectorAll('img').forEach(img => {
+                        img.style.maxHeight = '200px';
+                        img.style.width = 'auto';
+                        img.style.maxWidth = '100%';
+                        img.style.objectFit = 'contain';
+                        img.style.cursor = 'zoom-in';
+                        img.addEventListener('click', () => openLightbox(img.src));
+                    });
+
+                    card.appendChild(head);
+                    card.appendChild(body);
+                    descGrid.appendChild(card);
                 });
             } catch (err) {
-                console.error('Load description error:', err);
-                descCard.innerHTML = '<div class="empty-state">Gagal memuatkan penerangan.</div>';
+                console.error('Load descriptions error:', err);
+                descGrid.innerHTML = '<div class="empty-state">Gagal memuatkan penerangan.</div>';
             }
         }
 
@@ -1040,7 +1132,7 @@
         }
 
         // INIT
-        loadDescription();
+        loadDescriptions();
         loadBaju().then(() => listenVotes());
     </script>
 </body>
