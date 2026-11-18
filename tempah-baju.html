@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tempahan — Sistem Tempahan Baju</title>
+    <title>Tempah Baju — Sistem Tempahan Baju</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -38,7 +38,7 @@
             padding: 24px 20px 80px;
         }
 
-        .container { max-width: 900px; margin: 0 auto; }
+        .container { max-width: 820px; margin: 0 auto; }
 
         /* ============ TOPBAR ============ */
         .topbar {
@@ -46,7 +46,7 @@
             align-items: center;
             justify-content: space-between;
             gap: 16px;
-            margin-bottom: 28px;
+            margin-bottom: 24px;
             flex-wrap: wrap;
         }
         .topbar-left { display: flex; align-items: center; gap: 14px; }
@@ -56,242 +56,459 @@
             display: grid; place-items: center;
             background: linear-gradient(135deg, var(--brand-1), var(--brand-2) 55%, var(--brand-3));
             box-shadow: 0 10px 20px -8px rgba(99, 102, 241, 0.55);
-            color: #fff; flex-shrink: 0;
+            color: #fff;
+            flex-shrink: 0;
         }
         .topbar h1 { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
         .topbar p { font-size: 13px; color: var(--muted); font-weight: 500; margin-top: 2px; }
 
         .btn-back {
-            display: inline-flex; align-items: center; gap: 7px;
-            padding: 9px 14px; border-radius: 11px;
-            font-size: 13px; font-weight: 700; color: var(--muted);
-            background: #fff; border: 1.5px solid var(--line);
-            text-decoration: none; transition: border-color 0.2s, color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 14px;
+            border-radius: 11px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--muted);
+            background: #fff;
+            border: 1.5px solid var(--line);
+            text-decoration: none;
+            transition: border-color 0.2s, color 0.2s;
         }
         .btn-back:hover { border-color: #c7d2fe; color: #4f46e5; }
 
-        /* ============ PROGRESS BAR ============ */
-        .progress-bar {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 18px 22px;
+        /* ============ FORM PANEL ============ */
+        .panel {
             background: var(--card);
             border: 1px solid var(--line);
-            border-radius: 18px;
-            box-shadow: 0 6px 20px -14px rgba(15, 23, 42, 0.25);
-            margin-bottom: 28px;
-            flex-wrap: wrap;
-        }
-
-        .progress-step {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex: 1;
-            min-width: 160px;
-        }
-
-        .progress-num {
-            width: 30px; height: 30px;
-            border-radius: 50%;
-            display: grid; place-items: center;
-            font-size: 13px; font-weight: 800;
-            background: #f1f5f9; color: #94a3b8;
-            border: 2px solid #e2e8f0;
-            flex-shrink: 0;
-            transition: background 0.2s, border-color 0.2s, color 0.2s;
-        }
-        .progress-step.done .progress-num {
-            background: linear-gradient(135deg, var(--ok), #059669);
-            border-color: var(--ok);
-            color: #fff;
-        }
-        .progress-step .progress-label {
-            font-size: 13px; font-weight: 700; color: var(--muted);
-        }
-        .progress-step.done .progress-label { color: var(--ink); }
-
-        .progress-line {
-            flex: 1;
-            height: 2px;
-            background: var(--line);
-            border-radius: 2px;
-            min-width: 20px;
-        }
-        .progress-line.done { background: var(--ok); }
-
-        /* ============ STATUS CARDS ============ */
-        .status-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 18px;
-        }
-        @media (min-width: 720px) {
-            .status-grid { grid-template-columns: 1fr 1fr; }
-        }
-
-        .status-card {
-            position: relative;
-            background: var(--card);
-            border: 2px solid var(--line);
             border-radius: 20px;
-            padding: 24px 24px 22px;
             box-shadow: 0 10px 30px -18px rgba(15, 23, 42, 0.25);
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
             overflow: hidden;
         }
-        .status-card:hover {
-            transform: translateY(-3px);
-            border-color: #c7d2fe;
-            box-shadow: 0 20px 40px -20px rgba(99, 102, 241, 0.4);
-        }
-        .status-card.done {
-            border-color: #a7f3d0;
-            box-shadow: 0 10px 30px -18px rgba(16, 185, 129, 0.35);
-        }
-        .status-card.done:hover {
-            border-color: var(--ok);
-            box-shadow: 0 20px 40px -20px rgba(16, 185, 129, 0.5);
-        }
 
-        .status-card::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #cbd5e1, #e2e8f0);
-            transition: background 0.3s;
-        }
-        .status-card.done::before {
-            background: linear-gradient(90deg, var(--ok), #34d399);
-        }
-
-        .sc-head {
+        .panel-head {
+            padding: 22px 26px 18px;
+            border-bottom: 1px solid var(--line);
             display: flex;
             align-items: flex-start;
             gap: 14px;
+            background: linear-gradient(180deg, #fafbff, #fff);
         }
-
-        .sc-icon {
-            width: 48px; height: 48px;
-            border-radius: 14px;
+        .panel-head .ph-icon {
+            width: 44px; height: 44px;
+            border-radius: 12px;
             display: grid; place-items: center;
-            background: #eef2ff; color: #4f46e5;
-            border: 1px solid #c7d2fe;
+            background: linear-gradient(135deg, #eef2ff, #fdf2f8);
+            color: #6d28d9;
+            border: 1px solid #e0e7ff;
             flex-shrink: 0;
         }
-        .status-card.done .sc-icon {
-            background: #ecfdf5; color: #059669; border-color: #a7f3d0;
-        }
+        .panel-head h2 { font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
+        .panel-head p { font-size: 13px; color: var(--muted); font-weight: 500; margin-top: 2px; }
 
-        .sc-title-wrap { flex: 1; min-width: 0; }
+        .panel-body { padding: 24px 26px 28px; }
 
-        .sc-title {
-            font-size: 17px; font-weight: 800;
-            letter-spacing: -0.01em; line-height: 1.3;
-        }
-        .sc-desc {
-            font-size: 13px; color: var(--muted);
-            font-weight: 500; margin-top: 3px; line-height: 1.5;
-        }
+        /* ============ FIELD ============ */
+        .field { margin-bottom: 26px; }
 
-        .sc-status {
-            display: inline-flex; align-items: center; gap: 6px;
-            padding: 6px 12px; border-radius: 999px;
-            font-size: 12px; font-weight: 700;
-            align-self: flex-start; white-space: nowrap;
-        }
-        .sc-status.pending {
-            color: #b91c1c; background: #fef2f2; border: 1px solid #fecaca;
-        }
-        .sc-status.waiting {
-            color: #92400e; background: #fffbeb; border: 1px solid #fde68a;
-        }
-        .sc-status.complete {
-            color: #047857; background: #ecfdf5; border: 1px solid #a7f3d0;
-        }
-        .sc-status svg { flex-shrink: 0; }
-
-        .sc-info {
+        .field-label {
             display: flex;
-            flex-direction: column;
-            gap: 6px;
-            padding: 12px 14px;
-            background: #f8fafc;
-            border-radius: 12px;
-            border: 1px solid var(--line);
-        }
-        .sc-info-row {
-            display: flex; justify-content: space-between;
-            gap: 10px; font-size: 12.5px;
-        }
-        .sc-info-row .label { color: var(--muted); font-weight: 600; }
-        .sc-info-row .value {
-            color: var(--ink); font-weight: 700;
-            text-align: right;
-        }
-
-        .sc-actions {
-            display: flex; gap: 10px;
-            margin-top: auto; padding-top: 4px;
-        }
-
-        .btn-view {
-            flex: 1;
-            display: inline-flex; align-items: center; justify-content: center;
+            align-items: center;
             gap: 8px;
-            padding: 12px 18px;
-            border-radius: 12px; border: none;
-            font-size: 14px; font-weight: 700;
+            font-size: 13.5px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: -0.01em;
+        }
+        .field-label .label-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px; height: 22px;
+            border-radius: 7px;
+            background: #eef2ff;
+            color: #4f46e5;
+            font-size: 11.5px;
+            font-weight: 800;
+            border: 1px solid #c7d2fe;
+        }
+        .field-label .label-hint {
+            margin-left: auto;
+            font-size: 11.5px;
+            font-weight: 600;
+            color: var(--muted);
+            text-transform: none;
+            letter-spacing: 0;
+        }
+
+        .field input[type="text"] {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--ink);
+            background: #f8fafc;
+            border: 1.5px solid var(--line);
+            border-radius: 12px;
+            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+            font-family: inherit;
+        }
+        .field input[type="text"]:focus {
+            outline: none; background: #fff; border-color: var(--brand-1);
+            box-shadow: 0 0 0 4px var(--ring);
+        }
+        .field input[type="text"]::placeholder { font-weight: 500; color: #94a3b8; }
+        .field input[type="text"]:disabled { opacity: 0.65; cursor: not-allowed; }
+
+        /* ============ NUMBER GRID ============ */
+        .number-legend {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--muted);
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .legend-dot {
+            width: 14px; height: 14px;
+            border-radius: 4px;
+            border: 1.5px solid;
+        }
+        .legend-dot.available { background: #eef2ff; border-color: #c7d2fe; }
+        .legend-dot.taken { background: #fef2f2; border-color: #fecaca; }
+        .legend-dot.selected { background: linear-gradient(135deg, var(--brand-1), var(--brand-3)); border-color: var(--brand-1); }
+
+        .number-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
+            gap: 8px;
+            padding: 14px;
+            background: #fafbff;
+            border: 1.5px solid var(--line);
+            border-radius: 14px;
+        }
+
+        .num-btn {
+            position: relative;
+            aspect-ratio: 1 / 1;
+            border-radius: 10px;
+            border: 1.5px solid #c7d2fe;
+            background: #eef2ff;
+            color: #4338ca;
+            font-size: 13.5px;
+            font-weight: 800;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            transition: transform 0.12s, border-color 0.15s, background 0.15s, color 0.15s, box-shadow 0.15s;
+            font-family: inherit;
+            user-select: none;
+        }
+
+        .num-btn:hover:not(.taken):not(.selected):not(:disabled) {
+            border-color: var(--brand-1);
+            background: #fff;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px -4px rgba(99, 102, 241, 0.35);
+        }
+
+        .num-btn.selected {
+            background: linear-gradient(135deg, var(--brand-1), var(--brand-3));
+            border-color: var(--brand-1);
             color: #fff;
+            box-shadow: 0 6px 14px -4px rgba(99, 102, 241, 0.55);
+            transform: scale(1.05);
+        }
+
+        .num-btn.taken {
+            background: #fef2f2;
+            border-color: #fecaca;
+            color: #f87171;
+            cursor: not-allowed;
+            text-decoration: line-through;
+            text-decoration-thickness: 1.5px;
+        }
+
+        .num-btn:disabled { cursor: not-allowed; }
+
+        /* ============ SIZE PICKER ============ */
+        .size-grid {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .size-btn {
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: 1.5px solid var(--line);
+            background: #f8fafc;
+            color: var(--ink);
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: transform 0.12s, border-color 0.15s, background 0.15s, color 0.15s, box-shadow 0.15s;
+            font-family: inherit;
+            min-width: 64px;
+        }
+        .size-btn:hover:not(.selected):not(:disabled) {
+            border-color: #c7d2fe;
+            background: #fff;
+            transform: translateY(-1px);
+        }
+        .size-btn.selected {
+            background: linear-gradient(135deg, var(--brand-1), var(--brand-3));
+            border-color: var(--brand-1);
+            color: #fff;
+            box-shadow: 0 6px 14px -4px rgba(99, 102, 241, 0.55);
+            transform: scale(1.04);
+        }
+        .size-btn:disabled { cursor: not-allowed; }
+
+        /* ============ JENIS BAJU ============ */
+        .type-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .type-card {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 1.5px solid var(--line);
+            background: #f8fafc;
+            cursor: pointer;
+            transition: transform 0.12s, border-color 0.15s, background 0.15s, box-shadow 0.15s;
+            font-family: inherit;
+            text-align: left;
+        }
+        .type-card:hover:not(.selected):not(:disabled) {
+            border-color: #c7d2fe;
+            background: #fff;
+            transform: translateY(-1px);
+        }
+        .type-card.selected {
+            border-color: var(--brand-1);
+            background: #eef2ff;
+            box-shadow: 0 0 0 3px var(--ring);
+        }
+        .type-card:disabled { cursor: not-allowed; }
+
+        .type-radio {
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            border: 2px solid #cbd5e1;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            transition: border-color 0.15s, background 0.15s;
+        }
+        .type-card.selected .type-radio {
+            border-color: var(--brand-1);
+            background: var(--brand-1);
+        }
+        .type-radio::after {
+            content: "";
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: #fff;
+            opacity: 0;
+            transition: opacity 0.15s;
+        }
+        .type-card.selected .type-radio::after { opacity: 1; }
+
+        .type-text {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--ink);
+            line-height: 1.4;
+        }
+        .type-card.selected .type-text { color: #4338ca; }
+
+        /* ============ HARGA & TOTAL ============ */
+        .type-price {
+            margin-left: auto;
+            font-size: 13px;
+            font-weight: 800;
+            color: #4f46e5;
+            background: #eef2ff;
+            padding: 4px 10px;
+            border-radius: 8px;
+            border: 1px solid #c7d2fe;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .type-card.selected .type-price {
+            color: #fff;
+            background: var(--brand-1);
+            border-color: var(--brand-1);
+        }
+
+        .total-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 18px 22px;
+            margin-top: 24px;
+            background: linear-gradient(135deg, #eef2ff, #fdf2f8);
+            border: 1.5px solid #c7d2fe;
+            border-radius: 14px;
+            flex-wrap: wrap;
+        }
+
+        .total-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #4338ca;
+        }
+
+        .total-label svg { color: #6366f1; }
+
+        .total-value {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--ink);
+            line-height: 1;
+        }
+
+        .total-value .currency {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--muted);
+            margin-right: 3px;
+        }
+
+        .total-value.empty {
+            color: #94a3b8;
+            font-size: 16px;
+        }
+
+        /* ============ BUTTONS ============ */
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-top: 28px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            flex: 1;
+            padding: 15px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            cursor: pointer;
             background: linear-gradient(135deg, var(--brand-1), var(--brand-2) 55%, var(--brand-3));
             background-size: 200% 200%;
-            cursor: pointer; text-decoration: none;
             transition: background-position 0.5s ease, transform 0.15s ease, box-shadow 0.2s ease;
             box-shadow: 0 8px 18px -8px rgba(99, 102, 241, 0.6);
-            min-height: 46px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 50px;
         }
-        .btn-view:hover {
+        .btn-primary:hover:not(:disabled) {
             transform: translateY(-1.5px);
             background-position: 100% 50%;
             box-shadow: 0 14px 24px -10px rgba(139, 92, 246, 0.55);
         }
+        .btn-primary:disabled { opacity: 0.75; cursor: not-allowed; transform: none; }
 
-        .status-card.done .btn-view {
-            background: #fff; color: #047857;
-            border: 1.5px solid #a7f3d0;
-            box-shadow: none;
+        .spinner {
+            width: 16px; height: 16px;
+            border: 2px solid rgba(255,255,255,0.35); border-top-color: #fff;
+            border-radius: 50%; animation: spin 0.7s linear infinite;
         }
-        .status-card.done .btn-view:hover {
-            background: #ecfdf5;
-            border-color: var(--ok);
-            transform: translateY(-1px);
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Debug */
-        .debug-box {
+        /* ============ ALERTS ============ */
+        .alert {
+            display: none; align-items: flex-start; gap: 10px;
+            padding: 12px 14px; border-radius: 12px;
+            font-size: 13.5px; font-weight: 500; line-height: 1.5;
+            margin-top: 16px; animation: pop 0.25s ease;
+        }
+        .alert.show { display: flex; }
+        .alert svg { flex-shrink: 0; margin-top: 1px; }
+        .alert-error   { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+        .alert-success { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        @keyframes pop { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ============ STATUS DONE (bila dah tempah) ============ */
+        .done-banner {
             display: none;
-            margin-top: 24px;
-            padding: 14px 16px;
-            background: #f8fafc;
-            border: 1px dashed #cbd5e1;
-            border-radius: 12px;
-            font-family: ui-monospace, 'SF Mono', Menlo, monospace;
-            font-size: 11.5px;
-            line-height: 1.7;
-            color: #475569;
-            white-space: pre-wrap;
-            word-break: break-all;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 20px 22px;
+            border-radius: 16px;
+            background: #ecfdf5;
+            border: 1.5px solid #a7f3d0;
+            margin-bottom: 24px;
+            animation: pop 0.3s ease;
         }
-        .debug-box.show { display: block; }
-        .debug-box .dbg-title {
+        .done-banner.show { display: flex; }
+        .done-banner .db-icon {
+            width: 42px; height: 42px;
+            border-radius: 12px;
+            background: #10b981;
+            color: #fff;
+            display: grid; place-items: center;
+            flex-shrink: 0;
+        }
+        .done-banner h3 {
+            font-size: 15px;
             font-weight: 800;
-            color: #0f172a;
-            margin-bottom: 6px;
+            color: #065f46;
+            margin-bottom: 3px;
+        }
+        .done-banner p {
+            font-size: 13px;
+            color: #047857;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+        .done-banner .db-details {
+            margin-top: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .done-banner .db-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #065f46;
+            background: #fff;
+            border: 1px solid #a7f3d0;
+        }
+        .done-banner .db-chip.harga {
+            background: #eef2ff;
+            border-color: #c7d2fe;
+            color: #4338ca;
         }
 
         /* Toast */
@@ -301,27 +518,39 @@
             transform: translateX(-50%) translateY(20px);
             padding: 13px 20px;
             border-radius: 12px;
-            font-size: 13.5px; font-weight: 600;
-            color: #fff; background: #0f172a;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #fff;
+            background: #0f172a;
             box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4);
             opacity: 0; pointer-events: none;
             transition: opacity 0.25s, transform 0.25s;
             z-index: 1100;
-            max-width: 90vw; text-align: center;
+            max-width: 90vw;
+            text-align: center;
         }
         .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
         .toast.error { background: #dc2626; }
         .toast.success { background: #059669; }
 
+        /* Responsive */
         @media (max-width: 640px) {
             body { padding: 16px 14px 64px; }
             .topbar h1 { font-size: 18px; }
-            .status-card { padding: 20px 18px 18px; }
-            .sc-title { font-size: 15.5px; }
-            .sc-icon { width: 42px; height: 42px; }
-            .progress-bar { padding: 14px 16px; }
-            .progress-step { min-width: 120px; }
-            .progress-step .progress-label { font-size: 12px; }
+            .panel-head { padding: 18px 20px 14px; }
+            .panel-body { padding: 20px 20px 24px; }
+            .number-grid {
+                grid-template-columns: repeat(auto-fill, minmax(42px, 1fr));
+                gap: 6px; padding: 12px;
+            }
+            .num-btn { font-size: 12.5px; border-radius: 8px; }
+            .size-btn { padding: 10px 16px; min-width: 56px; font-size: 13px; }
+            .type-grid { grid-template-columns: 1fr; }
+            .type-price { font-size: 12px; padding: 3px 8px; }
+            .form-actions { flex-direction: column; }
+            .btn-primary { width: 100%; }
+            .total-bar { padding: 14px 16px; }
+            .total-value { font-size: 20px; }
         }
     </style>
 </head>
@@ -337,11 +566,11 @@
                     </svg>
                 </div>
                 <div>
-                    <h1>Tempahan Baju</h1>
-                    <p>Selesaikan dua langkah untuk tempahan anda</p>
+                    <h1>Tempah Baju</h1>
+                    <p>Isi butiran tempahan anda</p>
                 </div>
             </div>
-            <a class="btn-back" href="tempahan.html">
+            <a class="btn-back" href="borang-tempahan.html">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
                 </svg>
@@ -349,127 +578,155 @@
             </a>
         </header>
 
-        <!-- ===== Progress bar ===== -->
-        <div class="progress-bar">
-            <div class="progress-step" id="step1">
-                <div class="progress-num" id="step1Num">1</div>
-                <div class="progress-label">Tempah Baju</div>
+        <!-- ===== Banner selesai ===== -->
+        <div class="done-banner" id="doneBanner">
+            <div class="db-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"/>
+                </svg>
             </div>
-            <div class="progress-line" id="line1"></div>
-            <div class="progress-step" id="step2">
-                <div class="progress-num" id="step2Num">2</div>
-                <div class="progress-label">Pembayaran</div>
+            <div style="flex:1;">
+                <h3>Tempahan Anda Telah Direkodkan</h3>
+                <p>Anda sudah membuat tempahan. Sila teruskan ke langkah pembayaran.</p>
+                <div class="db-details">
+                    <span class="db-chip" id="chipNama">—</span>
+                    <span class="db-chip" id="chipNombor">—</span>
+                    <span class="db-chip" id="chipSaiz">—</span>
+                    <span class="db-chip" id="chipJenis">—</span>
+                    <span class="db-chip harga" id="chipHarga">—</span>
+                </div>
             </div>
         </div>
 
-        <!-- ===== Status cards ===== -->
-        <div class="status-grid">
-
-            <!-- KAD 1: TEMPAH BAJU -->
-            <article class="status-card" id="cardTempah">
-                <div class="sc-head">
-                    <div class="sc-icon">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M16 3l4 3-2.5 4L16 9v10a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V9L6.5 10 4 6l4-3c0 1.5 1.8 2.5 4 2.5S16 4.5 16 3z"/>
-                        </svg>
-                    </div>
-                    <div class="sc-title-wrap">
-                        <div class="sc-title">Tempah Baju</div>
-                        <div class="sc-desc">Isi maklumat tempahan dan pilih saiz baju anda.</div>
-                    </div>
-                </div>
-
-                <div class="sc-status pending" id="statusTempah">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        <!-- ===== Form ===== -->
+        <div class="panel">
+            <div class="panel-head">
+                <div class="ph-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
                     </svg>
-                    <span id="statusTempahText">Belum dibuat</span>
                 </div>
-
-                <div class="sc-info" id="infoTempah" style="display:none;">
-                    <div class="sc-info-row">
-                        <span class="label">Nombor</span>
-                        <span class="value" id="infoTempahNombor">—</span>
-                    </div>
-                    <div class="sc-info-row">
-                        <span class="label">Saiz</span>
-                        <span class="value" id="infoTempahSaiz">—</span>
-                    </div>
-                    <div class="sc-info-row">
-                        <span class="label">Jenis Baju</span>
-                        <span class="value" id="infoTempahJenis">—</span>
-                    </div>
-                    <div class="sc-info-row">
-                        <span class="label">Harga</span>
-                        <span class="value" id="infoTempahHarga">—</span>
-                    </div>
-                    <div class="sc-info-row">
-                        <span class="label">Tarikh Tempah</span>
-                        <span class="value" id="infoTempahDate">—</span>
-                    </div>
+                <div>
+                    <h2>Borang Tempahan</h2>
+                    <p>Semua maklumat diperlukan untuk proses tempahan.</p>
                 </div>
+            </div>
+            <div class="panel-body">
+                <form id="tempahForm" novalidate>
 
-                <div class="sc-actions">
-                    <a class="btn-view" id="btnTempah" href="tempah-baju.html">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M16 3l4 3-2.5 4L16 9v10a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V9L6.5 10 4 6l4-3c0 1.5 1.8 2.5 4 2.5S16 4.5 16 3z"/>
+                    <!-- 1. Nama -->
+                    <div class="field">
+                        <div class="field-label">
+                            <span class="label-num">1</span>
+                            Nama Pilihan Anda
+                        </div>
+                        <input type="text" id="namaInput" placeholder="Contoh: Ahmad bin Ali" maxlength="100" autocomplete="off">
+                    </div>
+
+                    <!-- 2. Nombor -->
+                    <div class="field">
+                        <div class="field-label">
+                            <span class="label-num">2</span>
+                            Nombor Pilihan (1 – 99)
+                            <span class="label-hint" id="nomborStatus">Pilih satu nombor</span>
+                        </div>
+                        <div class="number-legend">
+                            <span class="legend-item">
+                                <span class="legend-dot available"></span>
+                                Tersedia
+                            </span>
+                            <span class="legend-item">
+                                <span class="legend-dot taken"></span>
+                                Telah diambil
+                            </span>
+                            <span class="legend-item">
+                                <span class="legend-dot selected"></span>
+                                Pilihan anda
+                            </span>
+                        </div>
+                        <div class="number-grid" id="numberGrid">
+                            <!-- Grid akan dijana oleh JS -->
+                        </div>
+                    </div>
+
+                    <!-- 3. Saiz -->
+                    <div class="field">
+                        <div class="field-label">
+                            <span class="label-num">3</span>
+                            Saiz Baju
+                        </div>
+                        <div class="size-grid" id="sizeGrid">
+                            <button type="button" class="size-btn" data-size="S">S</button>
+                            <button type="button" class="size-btn" data-size="M">M</button>
+                            <button type="button" class="size-btn" data-size="L">L</button>
+                            <button type="button" class="size-btn" data-size="XL">XL</button>
+                            <button type="button" class="size-btn" data-size="2XL">2XL</button>
+                            <button type="button" class="size-btn" data-size="3XL">3XL</button>
+                        </div>
+                    </div>
+
+                    <!-- 4. Jenis Baju -->
+                    <div class="field">
+                        <div class="field-label">
+                            <span class="label-num">4</span>
+                            Jenis Baju
+                        </div>
+                        <div class="type-grid" id="typeGrid">
+                            <button type="button" class="type-card" data-type="Muslimah Type" data-price="41">
+                                <span class="type-radio"></span>
+                                <span class="type-text">Muslimah Type</span>
+                                <span class="type-price">RM 41</span>
+                            </button>
+                            <button type="button" class="type-card" data-type="Longsleeve Type Roundneck" data-price="38">
+                                <span class="type-radio"></span>
+                                <span class="type-text">Longsleeve Type Roundneck</span>
+                                <span class="type-price">RM 38</span>
+                            </button>
+                            <button type="button" class="type-card" data-type="Longsleeve Type Zip Collar" data-price="41">
+                                <span class="type-radio"></span>
+                                <span class="type-text">Longsleeve Type Zip Collar</span>
+                                <span class="type-price">RM 41</span>
+                            </button>
+                            <button type="button" class="type-card" data-type="Man Collar Zip" data-price="38">
+                                <span class="type-radio"></span>
+                                <span class="type-text">Man Collar Zip</span>
+                                <span class="type-price">RM 38</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Total Harga -->
+                    <div class="total-bar">
+                        <div class="total-label">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                            </svg>
+                            Jumlah Harga
+                        </div>
+                        <div class="total-value empty" id="totalValue">Pilih jenis baju</div>
+                    </div>
+
+                    <!-- Submit -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary" id="submitBtn" disabled>
+                            <span id="btnLabel">Hantar Tempahan</span>
+                        </button>
+                    </div>
+
+                    <div class="alert alert-error" id="errorMsg" role="alert">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
                         </svg>
-                        <span id="btnTempahText">Tempah Sekarang</span>
-                    </a>
-                </div>
-            </article>
-
-            <!-- KAD 2: PEMBAYARAN -->
-            <article class="status-card" id="cardBayar">
-                <div class="sc-head">
-                    <div class="sc-icon">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
+                        <span id="errorText"></span>
+                    </div>
+                    <div class="alert alert-success" id="successMsg" role="status">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
                         </svg>
+                        <span id="successText"></span>
                     </div>
-                    <div class="sc-title-wrap">
-                        <div class="sc-title">Pembayaran</div>
-                        <div class="sc-desc">Muat naik bukti pembayaran tempahan anda.</div>
-                    </div>
-                </div>
-
-                <div class="sc-status pending" id="statusBayar">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-                    </svg>
-                    <span id="statusBayarText">Belum dibayar</span>
-                </div>
-
-                <div class="sc-info" id="infoBayar" style="display:none;">
-                    <div class="sc-info-row">
-                        <span class="label">Jumlah</span>
-                        <span class="value" id="infoBayarJumlah">—</span>
-                    </div>
-                    <div class="sc-info-row">
-                        <span class="label">Status</span>
-                        <span class="value" id="infoBayarStatus">—</span>
-                    </div>
-                    <div class="sc-info-row">
-                        <span class="label">Tarikh Bayar</span>
-                        <span class="value" id="infoBayarDate">—</span>
-                    </div>
-                </div>
-
-                <div class="sc-actions">
-                    <a class="btn-view" id="btnBayar" href="pembayaran.html">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
-                        </svg>
-                        <span id="btnBayarText">Buat Pembayaran</span>
-                    </a>
-                </div>
-            </article>
-        </div>
-
-        <!-- Debug (untuk troubleshooting) -->
-        <div class="debug-box" id="debugBox">
-            <div class="dbg-title">🔍 Debug Info</div>
-            <div id="debugContent">—</div>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -480,7 +737,8 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
         import {
-            getFirestore, collection, getDocs, query, where
+            getFirestore, collection, getDocs, addDoc, query, where,
+            serverTimestamp
         } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
         // ==== Firebase Config ====
@@ -499,36 +757,33 @@
 
         // ==== Sesi semak ====
         const sessionRaw = sessionStorage.getItem('loggedInUser');
-        if (!sessionRaw) {
-            window.location.href = 'index.html';
-        }
+        if (!sessionRaw) window.location.href = 'index.html';
         const session = JSON.parse(sessionRaw || '{}');
 
         // ==== Refs ====
-        const cardTempah = document.getElementById('cardTempah');
-        const cardBayar = document.getElementById('cardBayar');
-        const statusTempah = document.getElementById('statusTempah');
-        const statusTempahText = document.getElementById('statusTempahText');
-        const statusBayar = document.getElementById('statusBayar');
-        const statusBayarText = document.getElementById('statusBayarText');
-        const infoTempah = document.getElementById('infoTempah');
-        const infoBayar = document.getElementById('infoBayar');
-        const btnTempah = document.getElementById('btnTempah');
-        const btnBayar = document.getElementById('btnBayar');
-        const step1 = document.getElementById('step1');
-        const step2 = document.getElementById('step2');
-        const step1Num = document.getElementById('step1Num');
-        const step2Num = document.getElementById('step2Num');
-        const line1 = document.getElementById('line1');
+        const form = document.getElementById('tempahForm');
+        const namaInput = document.getElementById('namaInput');
+        const numberGrid = document.getElementById('numberGrid');
+        const sizeGrid = document.getElementById('sizeGrid');
+        const typeGrid = document.getElementById('typeGrid');
+        const submitBtn = document.getElementById('submitBtn');
+        const btnLabel = document.getElementById('btnLabel');
+        const errorMsg = document.getElementById('errorMsg');
+        const errorText = document.getElementById('errorText');
+        const successMsg = document.getElementById('successMsg');
+        const successText = document.getElementById('successText');
+        const nomborStatus = document.getElementById('nomborStatus');
+        const doneBanner = document.getElementById('doneBanner');
         const toast = document.getElementById('toast');
-        const debugBox = document.getElementById('debugBox');
-        const debugContent = document.getElementById('debugContent');
+        const totalValue = document.getElementById('totalValue');
 
-        const debugLines = [];
-        function logDebug(msg) {
-            debugLines.push(msg);
-            debugContent.textContent = debugLines.join('\n');
-        }
+        // ==== State ====
+        let selectedNombor = null;
+        let selectedSaiz = null;
+        let selectedJenis = null;
+        let selectedHarga = null;
+        let takenNumbers = new Set();
+        let alreadyOrdered = false;
 
         function showToast(msg, type = 'info') {
             toast.textContent = msg;
@@ -536,220 +791,275 @@
             clearTimeout(showToast._t);
             showToast._t = setTimeout(() => toast.classList.remove('show'), 3500);
         }
-
-        function formatDate(ts) {
-            if (!ts) return '—';
-            try {
-                if (ts.toDate) return ts.toDate().toLocaleDateString('ms-MY', { day:'numeric', month:'short', year:'numeric' });
-                if (ts.seconds) return new Date(ts.seconds * 1000).toLocaleDateString('ms-MY', { day:'numeric', month:'short', year:'numeric' });
-                if (typeof ts === 'string') return new Date(ts).toLocaleDateString('ms-MY', { day:'numeric', month:'short', year:'numeric' });
-                if (ts instanceof Date) return ts.toLocaleDateString('ms-MY', { day:'numeric', month:'short', year:'numeric' });
-            } catch (_) {}
-            return '—';
+        function showError(msg) {
+            successMsg.classList.remove('show');
+            errorText.textContent = msg;
+            errorMsg.classList.add('show');
+            clearTimeout(showError._t);
+            showError._t = setTimeout(() => errorMsg.classList.remove('show'), 6000);
         }
-
-        function formatRM(n) {
-            return 'RM ' + (Number(n) || 0).toFixed(2);
+        function showSuccess(msg) {
+            errorMsg.classList.remove('show');
+            successText.textContent = msg;
+            successMsg.classList.add('show');
+            clearTimeout(showSuccess._t);
+            showSuccess._t = setTimeout(() => successMsg.classList.remove('show'), 5000);
+        }
+        function clearAlerts() {
+            errorMsg.classList.remove('show');
+            successMsg.classList.remove('show');
         }
 
         // ============================================================
-        // SEMAK STATUS TEMPAHAN
-        // Guna query tanpa orderBy dulu (lebih toleran pada data lama),
-        // kemudian sort manual di client.
+        // Update total harga
         // ============================================================
-        async function checkTempahan() {
-            logDebug(`[tempahan] Mencari matric = "${session.matric}"`);
+        function updateTotal() {
+            if (selectedHarga) {
+                totalValue.classList.remove('empty');
+                totalValue.innerHTML = `<span class="currency">RM</span>${selectedHarga.toFixed(2)}`;
+            } else {
+                totalValue.classList.add('empty');
+                totalValue.textContent = 'Pilih jenis baju';
+            }
+        }
+
+        // ============================================================
+        // Muat nombor yang dah diambil
+        // ============================================================
+        async function loadTakenNumbers() {
             try {
-                // Query TANPA orderBy — elak error kalau ada dokumen tanpa field createdAt
-                const q = query(
-                    collection(db, 'tempahan'),
-                    where('matric', '==', session.matric)
-                );
+                const snap = await getDocs(collection(db, 'tempahan'));
+                takenNumbers.clear();
+                snap.forEach(d => {
+                    const x = d.data();
+                    if (x.nombor != null) {
+                        takenNumbers.add(Number(x.nombor));
+                    }
+                });
+            } catch (err) {
+                console.error('Load taken numbers error:', err);
+                showToast('Gagal menyemak nombor tersedia.', 'error');
+            }
+        }
+
+        // ============================================================
+        // Render grid nombor 1–99
+        // ============================================================
+        function renderNumberGrid() {
+            let html = '';
+            for (let i = 1; i <= 99; i++) {
+                const taken = takenNumbers.has(i);
+                const selected = selectedNombor === i;
+                const cls = taken ? 'num-btn taken' : selected ? 'num-btn selected' : 'num-btn';
+                html += `<button type="button" class="${cls}" data-num="${i}" ${taken || alreadyOrdered ? 'disabled' : ''}>${i}</button>`;
+            }
+            numberGrid.innerHTML = html;
+
+            numberGrid.querySelectorAll('.num-btn:not(.taken):not(:disabled)').forEach(btn => {
+                btn.addEventListener('click', () => selectNombor(Number(btn.dataset.num)));
+            });
+        }
+
+        function selectNombor(num) {
+            if (takenNumbers.has(num)) {
+                showToast(`Nombor ${num} telah diambil.`, 'error');
+                return;
+            }
+            if (alreadyOrdered) return;
+            selectedNombor = num;
+            nomborStatus.textContent = `Dipilih: ${num}`;
+            nomborStatus.style.color = '#4f46e5';
+            renderNumberGrid();
+            updateSubmitState();
+        }
+
+        // ============================================================
+        // Saiz
+        // ============================================================
+        sizeGrid.querySelectorAll('.size-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (alreadyOrdered) return;
+                sizeGrid.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedSaiz = btn.dataset.size;
+                updateSubmitState();
+            });
+        });
+
+        // ============================================================
+        // Jenis baju
+        // ============================================================
+        typeGrid.querySelectorAll('.type-card').forEach(card => {
+            card.addEventListener('click', () => {
+                if (alreadyOrdered) return;
+                typeGrid.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                selectedJenis = card.dataset.type;
+                selectedHarga = Number(card.dataset.price) || null;
+                updateTotal();
+                updateSubmitState();
+            });
+        });
+
+        // ============================================================
+        // Enable/disable submit
+        // ============================================================
+        function updateSubmitState() {
+            const ok = selectedNombor && selectedSaiz && selectedJenis && !alreadyOrdered;
+            submitBtn.disabled = !ok;
+        }
+
+        namaInput.addEventListener('input', updateSubmitState);
+
+        // ============================================================
+        // Semak tempahan sedia ada pengguna
+        // ============================================================
+        async function checkExistingOrder() {
+            try {
+                const q = query(collection(db, 'tempahan'), where('matric', '==', session.matric));
                 const snap = await getDocs(q);
 
-                logDebug(`[tempahan] Dijumpai: ${snap.size} dokumen`);
+                if (!snap.empty) {
+                    const docs = [];
+                    snap.forEach(d => docs.push(d.data()));
+                    docs.sort((a, b) => {
+                        const ta = a.createdAt?.toMillis?.() || 0;
+                        const tb = b.createdAt?.toMillis?.() || 0;
+                        return tb - ta;
+                    });
+                    const t = docs[0];
 
-                if (snap.empty) {
-                    logDebug('[tempahan] Tiada dokumen untuk matric ini.');
-                    return false;
+                    alreadyOrdered = true;
+
+                    doneBanner.classList.add('show');
+                    document.getElementById('chipNama').textContent = t.nama || '—';
+                    document.getElementById('chipNombor').textContent = 'Nombor ' + (t.nombor || '—');
+                    document.getElementById('chipSaiz').textContent = 'Saiz ' + (t.saiz || '—');
+                    document.getElementById('chipJenis').textContent = t.jenis || '—';
+                    document.getElementById('chipHarga').textContent = 'RM ' + (Number(t.harga) || 0).toFixed(2);
+
+                    namaInput.disabled = true;
+                    namaInput.value = t.nama || '';
+                    selectedNombor = Number(t.nombor) || null;
+                    selectedSaiz = t.saiz || null;
+                    selectedJenis = t.jenis || null;
+                    selectedHarga = Number(t.harga) || null;
+                    updateTotal();
+
+                    if (selectedNombor) {
+                        nomborStatus.textContent = `Dipilih: ${selectedNombor}`;
+                        nomborStatus.style.color = '#4f46e5';
+                    }
+
+                    sizeGrid.querySelectorAll('.size-btn').forEach(b => {
+                        b.classList.toggle('selected', b.dataset.size === selectedSaiz);
+                        b.disabled = true;
+                    });
+                    typeGrid.querySelectorAll('.type-card').forEach(c => {
+                        c.classList.toggle('selected', c.dataset.type === selectedJenis);
+                        c.disabled = true;
+                        c.style.cursor = 'not-allowed';
+                    });
+
+                    renderNumberGrid();
+
+                    submitBtn.disabled = true;
+                    btnLabel.textContent = 'Tempahan Sudah Direkodkan';
+
+                    return true;
                 }
-
-                // Ambil yang terbaru (sort manual)
-                const docs = [];
-                snap.forEach(d => docs.push({ id: d.id, ...d.data() }));
-                docs.sort((a, b) => {
-                    const ta = a.createdAt?.toMillis?.() || (a.createdAt?.seconds ? a.createdAt.seconds * 1000 : 0);
-                    const tb = b.createdAt?.toMillis?.() || (b.createdAt?.seconds ? b.createdAt.seconds * 1000 : 0);
-                    return tb - ta;
-                });
-                const t = docs[0];
-
-                logDebug(`[tempahan] Data: nama=${t.nama}, nombor=${t.nombor}, saiz=${t.saiz}, jenis=${t.jenis}, harga=${t.harga}`);
-
-                // Update kad
-                cardTempah.classList.add('done');
-                statusTempah.classList.remove('pending');
-                statusTempah.classList.add('complete');
-                statusTempah.innerHTML = `
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="20 6 9 17 4 12"/>
-                    </svg>
-                    <span>Selesai</span>
-                `;
-
-                // Tunjuk info
-                infoTempah.style.display = 'flex';
-                document.getElementById('infoTempahNombor').textContent = t.nombor || '—';
-                document.getElementById('infoTempahSaiz').textContent = t.saiz || '—';
-                document.getElementById('infoTempahJenis').textContent = t.jenis || '—';
-                document.getElementById('infoTempahHarga').textContent = formatRM(t.harga);
-                document.getElementById('infoTempahDate').textContent = formatDate(t.createdAt);
-
-                // Butang tukar
-                btnTempah.innerHTML = `
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                        <circle cx="12" cy="12" r="3"/>
-                    </svg>
-                    <span>Lihat Tempahan</span>
-                `;
-
-                // Progress
-                step1.classList.add('done');
-                step1Num.innerHTML = '✓';
-                line1.classList.add('done');
-
-                return true;
+                return false;
             } catch (err) {
-                console.error('Check tempahan error:', err);
-                logDebug(`[tempahan] ERROR: ${err.message}`);
-                showToast('Gagal menyemak status tempahan: ' + err.message, 'error');
+                console.error('Check existing order error:', err);
                 return false;
             }
         }
 
         // ============================================================
-        // SEMAK STATUS PEMBAYARAN
+        // Submit tempahan
         // ============================================================
-        async function checkPembayaran() {
-            logDebug(`[pembayaran] Mencari matric = "${session.matric}"`);
-            try {
-                const q = query(
-                    collection(db, 'pembayaran'),
-                    where('matric', '==', session.matric)
-                );
-                const snap = await getDocs(q);
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            clearAlerts();
 
-                logDebug(`[pembayaran] Dijumpai: ${snap.size} dokumen`);
+            const nama = namaInput.value.trim();
 
-                if (snap.empty) {
-                    logDebug('[pembayaran] Tiada dokumen untuk matric ini.');
-                    return false;
-                }
+            if (!nama) return showError('Sila masukkan nama pilihan anda.');
+            if (nama.length < 3) return showError('Nama terlalu pendek (min 3 aksara).');
+            if (!selectedNombor) return showError('Sila pilih nombor pilihan.');
+            if (!selectedSaiz) return showError('Sila pilih saiz baju.');
+            if (!selectedJenis) return showError('Sila pilih jenis baju.');
 
-                // Ambil yang terbaru
-                const docs = [];
-                snap.forEach(d => docs.push({ id: d.id, ...d.data() }));
-                docs.sort((a, b) => {
-                    const ta = a.createdAt?.toMillis?.() || (a.createdAt?.seconds ? a.createdAt.seconds * 1000 : 0);
-                    const tb = b.createdAt?.toMillis?.() || (b.createdAt?.seconds ? b.createdAt.seconds * 1000 : 0);
-                    return tb - ta;
-                });
-                const p = docs[0];
-
-                const statusRaw = (p.status || '').toLowerCase().trim();
-                logDebug(`[pembayaran] Status mentah: "${statusRaw}", jumlah: ${p.jumlah}, slipUrl: ${p.slipUrl ? 'ADA' : 'TIADA'}`);
-
-                const isSelesai = ['selesai', 'verified', 'approved', 'paid', 'lulus'].includes(statusRaw);
-                const isPending = ['pending', 'menunggu', 'waiting', 'semakan'].includes(statusRaw);
-
-                // Update kad ikut status
-                if (isSelesai) {
-                    cardBayar.classList.add('done');
-                    statusBayar.classList.remove('pending', 'waiting');
-                    statusBayar.classList.add('complete');
-                    statusBayar.innerHTML = `
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="20 6 9 17 4 12"/>
-                        </svg>
-                        <span>Selesai</span>
-                    `;
-                    step2.classList.add('done');
-                    step2Num.innerHTML = '✓';
-                } else if (isPending) {
-                    cardBayar.classList.remove('done');
-                    statusBayar.classList.remove('pending', 'complete');
-                    statusBayar.classList.add('waiting');
-                    statusBayar.innerHTML = `
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-                        </svg>
-                        <span>Menunggu Semakan</span>
-                    `;
-                } else {
-                    cardBayar.classList.remove('done');
-                    statusBayar.classList.remove('complete', 'waiting');
-                    statusBayar.classList.add('pending');
-                    statusBayar.innerHTML = `
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-                        </svg>
-                        <span>Belum Dibayar</span>
-                    `;
-                }
-
-                // Tunjuk info
-                infoBayar.style.display = 'flex';
-                document.getElementById('infoBayarJumlah').textContent = formatRM(p.jumlah);
-                document.getElementById('infoBayarStatus').textContent = isSelesai ? 'Disahkan' : isPending ? 'Menunggu' : (p.status || '—');
-                document.getElementById('infoBayarDate').textContent = formatDate(p.createdAt);
-
-                // Butang
-                btnBayar.innerHTML = isSelesai ? `
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                        <circle cx="12" cy="12" r="3"/>
-                    </svg>
-                    <span>Lihat Pembayaran</span>
-                ` : `
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
-                    </svg>
-                    <span>Lihat Status</span>
-                `;
-
-                return isSelesai;
-            } catch (err) {
-                console.error('Check pembayaran error:', err);
-                logDebug(`[pembayaran] ERROR: ${err.message}`);
-                showToast('Gagal menyemak status pembayaran: ' + err.message, 'error');
-                return false;
+            // Semak semula nombor (elak race condition)
+            await loadTakenNumbers();
+            if (takenNumbers.has(selectedNombor)) {
+                const conflict = selectedNombor;
+                selectedNombor = null;
+                renderNumberGrid();
+                updateSubmitState();
+                return showError(`Nombor ${conflict} baru sahaja diambil orang lain. Sila pilih nombor lain.`);
             }
-        }
+
+            submitBtn.disabled = true;
+            btnLabel.innerHTML = '<span class="spinner"></span>Menghantar...';
+
+            try {
+                await addDoc(collection(db, 'tempahan'), {
+                    matric: session.matric,
+                    loginName: session.name || '',
+                    nama,
+                    nombor: selectedNombor,
+                    saiz: selectedSaiz,
+                    jenis: selectedJenis,
+                    harga: selectedHarga,
+                    createdAt: serverTimestamp()
+                });
+
+                alreadyOrdered = true;
+
+                showSuccess('Tempahan berjaya dihantar! Sila teruskan ke pembayaran.');
+                showToast('Tempahan berjaya direkodkan! 🎉', 'success');
+
+                doneBanner.classList.add('show');
+                document.getElementById('chipNama').textContent = nama;
+                document.getElementById('chipNombor').textContent = 'Nombor ' + selectedNombor;
+                document.getElementById('chipSaiz').textContent = 'Saiz ' + selectedSaiz;
+                document.getElementById('chipJenis').textContent = selectedJenis;
+                document.getElementById('chipHarga').textContent = 'RM ' + (selectedHarga || 0).toFixed(2);
+
+                namaInput.disabled = true;
+                sizeGrid.querySelectorAll('.size-btn').forEach(b => b.disabled = true);
+                typeGrid.querySelectorAll('.type-card').forEach(c => {
+                    c.disabled = true;
+                    c.style.cursor = 'not-allowed';
+                });
+
+                await loadTakenNumbers();
+                renderNumberGrid();
+
+                btnLabel.textContent = 'Tempahan Sudah Direkodkan';
+
+                setTimeout(() => {
+                    doneBanner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 400);
+
+            } catch (err) {
+                console.error('Submit error:', err);
+                showError('Ralat: ' + err.message);
+                submitBtn.disabled = false;
+                btnLabel.textContent = 'Hantar Tempahan';
+            }
+        });
 
         // ============================================================
         // INIT
         // ============================================================
         (async function init() {
-            logDebug(`Session matric: "${session.matric}"`);
-            logDebug(`Session name: "${session.name}"`);
-            logDebug('---');
-
-            const tempahDone = await checkTempahan();
-            const bayarDone = await checkPembayaran();
-
-            logDebug('---');
-            logDebug(`Tempah selesai: ${tempahDone}`);
-            logDebug(`Bayar selesai: ${bayarDone}`);
-
-            if (tempahDone && bayarDone) {
-                showToast('Tempahan anda telah selesai sepenuhnya! 🎉', 'success');
-            } else if (tempahDone) {
-                showToast('Tempahan direkodkan. Sila teruskan pembayaran.', 'info');
-            }
-
-            // Tunjuk debug box (boleh comment kalau tak perlu)
-            debugBox.classList.add('show');
+            await loadTakenNumbers();
+            await checkExistingOrder();
+            renderNumberGrid();
+            updateTotal();
+            updateSubmitState();
         })();
     </script>
 </body>
