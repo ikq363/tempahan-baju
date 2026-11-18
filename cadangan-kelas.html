@@ -477,6 +477,12 @@
                 </svg>
                 Nama & Logo
             </button>
+            <button class="tab-btn" data-tab="moto" role="tab">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3v18M3 12h18"/><path d="m5 5 14 14M19 5 5 19"/>
+                </svg>
+                Moto Kelas
+            </button>
         </div>
 
         <!-- ============================================================
@@ -650,6 +656,55 @@
                 <p class="section-title">Pilih Nama & Logo Kegemaran Anda</p>
                 <div class="list-grid" id="listNamaLogo">
                     <div class="empty-state">Memuatkan cadangan nama & logo...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================
+             TAB 4 — CADANGAN & VOTING MOTO KELAS
+        ============================================================ -->
+        <div class="tab-panel" id="panel-moto">
+            <div class="panel">
+                <div class="panel-head">
+                    <div class="ph-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 3v18M3 12h18"/><path d="m5 5 14 14M19 5 5 19"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Hantar Cadangan Moto Kelas</h2>
+                        <p>Cipta slogan atau moto yang menggambarkan identiti dan semangat kelas.</p>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <form id="formMoto" novalidate>
+                        <div class="field">
+                            <label for="motoInput">Moto Kelas Dicadangkan</label>
+                            <input type="text" id="motoInput" placeholder="Contoh: Bersatu Melangkah, Bersama Berjaya" maxlength="100">
+                        </div>
+                        <button type="submit" class="btn-primary" id="btnMoto">
+                            <span id="btnMotoLabel">Hantar Cadangan</span>
+                        </button>
+                        <div class="alert alert-error" id="motoError" role="alert">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                            </svg>
+                            <span id="motoErrorText"></span>
+                        </div>
+                        <div class="alert alert-success" id="motoSuccess" role="status">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+                            </svg>
+                            <span id="motoSuccessText"></span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="section-block">
+                <p class="section-title">Undi Moto Kelas Pilihan Anda</p>
+                <div class="list-grid" id="listMoto">
+                    <div class="empty-state">Memuatkan cadangan moto kelas...</div>
                 </div>
             </div>
         </div>
@@ -877,22 +932,22 @@
         async function loadVoteCounts() {
             try {
                 const snap = await getDocs(collection(db, 'cadanganVotes'));
-                const nama = {}, logo = {}, namaLogo = {};
+                const nama = {}, logo = {}, namaLogo = {}, moto = {};
                 snap.forEach(d => {
                     const v = d.data();
                     if (v.namaId) nama[v.namaId] = (nama[v.namaId] || 0) + 1;
                     if (v.logoId) logo[v.logoId] = (logo[v.logoId] || 0) + 1;
-                    if (v.namaLogoId) namaLogo[v.namaLogoId] = (namaLogo[v.namaLogoId] || 0) + 1;
+                    if (v.namaLogoId) namaLogo[v.namaLogoId] = (namaLogo[v.namaLogoId] || 0) + 1;\n                    if (v.motoId) moto[v.motoId] = (moto[v.motoId] || 0) + 1;
                 });
-                return { nama, logo, namaLogo };
+                return { nama, logo, namaLogo, moto };
             } catch (err) {
                 console.error('Load vote counts error:', err);
-                return { nama: {}, logo: {}, namaLogo: {} };
+                return { nama: {}, logo: {}, namaLogo: {}, moto: {} };
             }
         }
 
         let userVote = {};
-        let voteCounts = { nama: {}, logo: {}, namaLogo: {} };
+        let voteCounts = { nama: {}, logo: {}, namaLogo: {}, moto: {} };
 
         async function refreshAll() {
             userVote = await getUserVote();
@@ -1130,10 +1185,67 @@
             }
         }
 
+        // ============================================================
+        // LOAD & RENDER — MOTO KELAS
+        // ============================================================
+        async function loadMoto() {
+            const list = $('listMoto');
+            try {
+                const q = query(collection(db, 'cadanganMoto'), orderBy('createdAt', 'desc'));
+                const snap = await getDocs(q);
+
+                if (snap.empty) {
+                    list.innerHTML = '<div class="empty-state">Belum ada cadangan moto kelas. Jadilah yang pertama!</div>';
+                    return;
+                }
+
+                const items = [];
+                snap.forEach(d => items.push({ id: d.id, ...d.data() }));
+                items.sort((a, b) => (voteCounts.moto[b.id] || 0) - (voteCounts.moto[a.id] || 0));
+
+                list.innerHTML = items.map(x => {
+                    const votes = voteCounts.moto[x.id] || 0;
+                    const selected = userVote.motoId === x.id;
+                    return `
+                        <article class="item-card ${selected ? 'selected' : ''}" data-id="${x.id}">
+                            <div class="item-head">
+                                <div style="min-width:0;">
+                                    <div class="item-title">${escapeHtml(x.motto || 'Moto Tanpa Nama')}</div>
+                                    <div class="item-sub">
+                                        ${x.createdByName ? 'oleh ' + escapeHtml(x.createdByName) : ''}
+                                        ${x.createdAt ? ' · ' + formatDate(x.createdAt) : ''}
+                                    </div>
+                                </div>
+                                <div class="select-check">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="20 6 9 17 4 12"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="vote-badge">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/>
+                                </svg>
+                                ${votes} undian
+                            </div>
+                        </article>
+                    `;
+                }).join('');
+
+                list.querySelectorAll('.item-card').forEach(c => {
+                    c.addEventListener('click', () => handleVote('motoId', c.dataset.id));
+                });
+            } catch (err) {
+                console.error('Load moto error:', err);
+                list.innerHTML = '<div class="empty-state">Gagal memuatkan cadangan moto kelas.</div>';
+            }
+        }
+
         function renderAll() {
             loadNama();
             loadLogo();
             loadNamaLogo();
+            loadMoto();
         }
 
         // ============================================================
@@ -1246,6 +1358,40 @@
             } finally {
                 $('btnNamaLogo').disabled = false;
                 $('btnNamaLogoLabel').textContent = 'Hantar Cadangan';
+            }
+        });
+
+        // ============================================================
+        // SUBMIT — MOTO KELAS
+        // ============================================================
+        $('formMoto').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            clearAlerts(['motoError', 'motoSuccess']);
+            const motto = $('motoInput').value.trim();
+
+            if (!motto) return alertShow('motoError', 'motoErrorText', 'Sila masukkan moto kelas.');
+            if (motto.length < 5) return alertShow('motoError', 'motoErrorText', 'Moto terlalu pendek. Sila masukkan sekurang-kurangnya 5 aksara.');
+
+            $('btnMoto').disabled = true;
+            $('btnMotoLabel').innerHTML = '<span class="spinner"></span>Menghantar...';
+
+            try {
+                await addDoc(collection(db, 'cadanganMoto'), {
+                    motto,
+                    matric: session.matric,
+                    createdByName: session.name || '',
+                    createdAt: serverTimestamp()
+                });
+                $('motoInput').value = '';
+                alertShow('motoSuccess', 'motoSuccessText', 'Cadangan moto kelas berjaya dihantar!', 'success');
+                await refreshAll();
+                await loadMoto();
+            } catch (err) {
+                console.error('Submit moto error:', err);
+                alertShow('motoError', 'motoErrorText', 'Ralat: ' + err.message);
+            } finally {
+                $('btnMoto').disabled = false;
+                $('btnMotoLabel').textContent = 'Hantar Cadangan';
             }
         });
 
