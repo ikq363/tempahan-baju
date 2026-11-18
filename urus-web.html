@@ -93,6 +93,14 @@
         .panel-head h2 { font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
         .panel-head p { font-size: 13px; color: var(--muted); font-weight: 500; margin-top: 2px; }
 
+        .count-pill {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 7px 13px; border-radius: 999px;
+            font-size: 12.5px; font-weight: 700;
+            color: #065f46; background: #ecfdf5;
+            border: 1px solid #a7f3d0; white-space: nowrap;
+        }
+
         .panel-body { padding: 24px 26px 28px; }
 
         /* ---- Form ---- */
@@ -154,7 +162,7 @@
         .editor-toolbar button.active { background: #eef2ff; border-color: var(--brand-1); color: var(--brand-1); }
 
         .editor-area {
-            width: 100%; min-height: 200px; padding: 16px;
+            width: 100%; min-height: 180px; padding: 16px;
             font-size: 15px; line-height: 1.7; color: var(--ink);
             background: #fff; border: 1.5px solid var(--line);
             border-radius: 0 0 12px 12px;
@@ -232,6 +240,96 @@
         .alert-success { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
         @keyframes pop { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* ---- Senarai penerangan ---- */
+        .desc-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .desc-item {
+            background: #fafbff;
+            border: 1.5px solid var(--line);
+            border-radius: 16px;
+            padding: 18px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .desc-item:hover { border-color: #c7d2fe; background: #fff; }
+
+        .desc-item-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .desc-item-head h4 {
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            line-height: 1.3;
+            word-break: break-word;
+        }
+        .desc-item-date {
+            font-size: 11px;
+            color: #94a3b8;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .desc-preview {
+            font-size: 13px;
+            color: var(--muted);
+            font-weight: 500;
+            line-height: 1.55;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .desc-preview img { display: none; }
+
+        .desc-item-foot {
+            display: flex;
+            gap: 8px;
+            margin-top: auto;
+            padding-top: 6px;
+        }
+        .btn-edit, .btn-del {
+            flex: 1;
+            padding: 8px 12px;
+            border-radius: 9px;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.15s, border-color 0.15s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        .btn-edit {
+            color: #4f46e5;
+            background: #eef2ff;
+            border: 1px solid #c7d2fe;
+        }
+        .btn-edit:hover { background: #e0e7ff; }
+        .btn-del {
+            color: #b91c1c;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+        }
+        .btn-del:hover { background: #fee2e2; }
+
+        .empty-state {
+            grid-column: 1 / -1; padding: 26px; text-align: center;
+            border: 1.5px dashed var(--line); border-radius: 14px;
+            color: var(--muted); font-size: 13.5px; font-weight: 500; background: #fafbff;
+        }
+
         /* ---- Image preview (upload baju) ---- */
         .img-drop {
             position: relative; display: grid; place-items: center;
@@ -277,19 +375,13 @@
             display: flex; justify-content: space-between; align-items: center;
         }
         .baju-card .bc-date { font-size: 11.5px; color: #94a3b8; font-weight: 600; }
-        .btn-del {
+        .btn-del-baju {
             padding: 6px 10px; border-radius: 8px;
             background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca;
             font-size: 12px; font-weight: 700; cursor: pointer;
             transition: background 0.15s;
         }
-        .btn-del:hover { background: #fee2e2; }
-
-        .empty-state {
-            grid-column: 1 / -1; padding: 26px; text-align: center;
-            border: 1.5px dashed var(--line); border-radius: 14px;
-            color: var(--muted); font-size: 13.5px; font-weight: 500; background: #fafbff;
-        }
+        .btn-del-baju:hover { background: #fee2e2; }
     </style>
 </head>
 <body>
@@ -316,7 +408,7 @@
             </a>
         </header>
 
-        <!-- ===== 1. Penerangan Tempahan Baju ===== -->
+        <!-- ===== 1. Penerangan Tempahan Baju (BANYAK) ===== -->
         <p class="section-title">Bahagian 1 — Penerangan Tempahan Baju</p>
         <section class="panel">
             <div class="panel-head">
@@ -327,16 +419,29 @@
                         </svg>
                     </div>
                     <div>
-                        <h2>Editor Penerangan</h2>
+                        <h2 id="editorTitle">Tambah Penerangan Baharu</h2>
                         <p>Tulis penerangan, pilih font & saiz, lampirkan gambar.</p>
                     </div>
                 </div>
+                <span class="count-pill" id="descCountPill">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+                    </svg>
+                    <span id="descCountNum">0</span> penerangan
+                </span>
             </div>
             <div class="panel-body">
                 <form id="descForm" novalidate>
+                    <input type="hidden" id="editingId" value="">
+
+                    <div class="field">
+                        <label for="descTitle">Tajuk Penerangan</label>
+                        <input type="text" id="descTitle" placeholder="Contoh: Penerangan Tempahan Baju 2025" maxlength="120">
+                    </div>
+
                     <div class="field">
                         <label>Toolbar Format</label>
-                        <div class="editor-toolbar">
+                        <div class="editor-toolbar" id="editorToolbar">
                             <div class="tb-group">
                                 <label for="fontSelect">Font</label>
                                 <select id="fontSelect">
@@ -395,8 +500,9 @@
 
                     <div class="form-actions">
                         <button type="submit" class="btn-primary" id="descSaveBtn">
-                            <span id="descBtnLabel">Simpan Penerangan</span>
+                            <span id="descBtnLabel">Tambah Penerangan</span>
                         </button>
+                        <button type="button" class="btn-ghost" id="descCancelBtn" style="display:none;">Batal Edit</button>
                     </div>
 
                     <div class="alert alert-error" id="descErrorMsg" role="alert">
@@ -412,6 +518,14 @@
                         <span id="descSuccessText"></span>
                     </div>
                 </form>
+
+                <!-- Senarai penerangan -->
+                <div style="margin-top: 28px;">
+                    <p class="section-title" style="margin-left:0;">Penerangan Sedia Ada</p>
+                    <div class="desc-list" id="descList">
+                        <div class="empty-state">Memuatkan penerangan...</div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -491,7 +605,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
         import {
             getFirestore, collection, doc, getDoc, getDocs, addDoc,
-            setDoc, deleteDoc, serverTimestamp, query, orderBy
+            setDoc, deleteDoc, updateDoc, serverTimestamp, query, orderBy
         } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
         // ==== Firebase Config ====
@@ -516,10 +630,8 @@
             const fd = new FormData();
             fd.append('file', file);
             fd.append('upload_preset', UPLOAD_PRESET);
-
             const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
-                method: 'POST',
-                body: fd
+                method: 'POST', body: fd
             });
             const data = await res.json();
             if (!res.ok) throw new Error(data.error?.message || 'Upload Cloudinary gagal');
@@ -554,11 +666,17 @@
                 '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
             }[c]));
         }
+        function stripHtml(html) {
+            const tmp = document.createElement('div');
+            tmp.innerHTML = html;
+            return tmp.textContent || tmp.innerText || '';
+        }
 
         // ============================================================
-        // BAHAGIAN 1 — Penerangan
+        // BAHAGIAN 1 — Penerangan (BANYAK)
         // ============================================================
         const descEditor = $('descEditor');
+        const descTitle = $('descTitle');
         const fontSelect = $('fontSelect');
         const sizeInput = $('sizeInput');
         const descImageInput = $('descImageInput');
@@ -566,8 +684,13 @@
         const descForm = $('descForm');
         const descSaveBtn = $('descSaveBtn');
         const descBtnLabel = $('descBtnLabel');
+        const descCancelBtn = $('descCancelBtn');
+        const descList = $('descList');
+        const editingId = $('editingId');
+        const editorTitle = $('editorTitle');
+        const descCountNum = $('descCountNum');
 
-        // Toolbar format
+        // Toolbar
         document.querySelectorAll('.editor-toolbar button[data-cmd]').forEach(btn => {
             btn.addEventListener('mousedown', (e) => e.preventDefault());
             btn.addEventListener('click', () => {
@@ -577,22 +700,16 @@
             });
         });
 
-        // Font family
         fontSelect.addEventListener('change', () => {
             descEditor.focus();
             document.execCommand('fontName', false, fontSelect.value);
         });
 
-        // Font size — guna execCommand fontSize dengan value 1..7 (legacy), 
-        // tapi kita apply juga style terus untuk saiz lebih fleksibel
         sizeInput.addEventListener('change', () => {
             const px = Math.max(10, Math.min(72, Number(sizeInput.value) || 15));
             sizeInput.value = px;
             descEditor.focus();
-            // Gunakan fontSize legacy supaya selection kekal
-            // (untuk saiz custom, kita wrap dengan span melalui execCommand + normalize)
             document.execCommand('fontSize', false, '7');
-            // Selepas itu, tukar semua <font size="7"> terpilih ke span dgn font-size px
             descEditor.querySelectorAll('font[size="7"]').forEach(f => {
                 const span = document.createElement('span');
                 span.style.fontSize = px + 'px';
@@ -601,7 +718,6 @@
             });
         });
 
-        // Update toolbar active state
         function updateToolbarState() {
             document.querySelectorAll('.editor-toolbar button[data-cmd]').forEach(btn => {
                 const cmd = btn.dataset.cmd;
@@ -615,16 +731,12 @@
         descEditor.addEventListener('keyup', updateToolbarState);
         descEditor.addEventListener('mouseup', updateToolbarState);
 
-        // Attach gambar ke editor
+        // Attach gambar
         descImageInput.addEventListener('change', async (e) => {
             const file = e.target.files?.[0];
             if (!file) return;
-            if (!file.type.startsWith('image/')) {
-                return alertError('descErrorMsg','descErrorText','Fail bukan gambar.');
-            }
-            if (file.size > 5 * 1024 * 1024) {
-                return alertError('descErrorMsg','descErrorText','Gambar melebihi 5MB.');
-            }
+            if (!file.type.startsWith('image/')) return alertError('descErrorMsg','descErrorText','Fail bukan gambar.');
+            if (file.size > 5 * 1024 * 1024) return alertError('descErrorMsg','descErrorText','Gambar melebihi 5MB.');
 
             descAttachStatus.textContent = 'Memuat naik ke Cloudinary...';
             try {
@@ -640,56 +752,164 @@
             }
         });
 
-        // Load penerangan sedia ada
-        async function loadDescription() {
+        // Reset editor
+        function resetEditor() {
+            editingId.value = '';
+            descTitle.value = '';
+            descEditor.innerHTML = '';
+            fontSelect.value = "'Plus Jakarta Sans', sans-serif";
+            sizeInput.value = 15;
+            descAttachStatus.textContent = 'Tiada gambar dilampirkan';
+            editorTitle.textContent = 'Tambah Penerangan Baharu';
+            descBtnLabel.textContent = 'Tambah Penerangan';
+            descCancelBtn.style.display = 'none';
+            clearAlerts();
+        }
+
+        // Load senarai penerangan
+        async function loadDescriptions() {
             try {
-                const snap = await getDoc(doc(db, 'penerangan', 'utama'));
-                if (snap.exists()) {
-                    const d = snap.data();
-                    descEditor.innerHTML = d.html || '';
-                    if (d.fontFamily) fontSelect.value = d.fontFamily;
-                    if (d.fontSize) sizeInput.value = d.fontSize;
+                const q = query(collection(db, 'penerangan'), orderBy('createdAt', 'desc'));
+                const snap = await getDocs(q);
+                descCountNum.textContent = snap.size;
+
+                if (snap.empty) {
+                    descList.innerHTML = '<div class="empty-state">Belum ada penerangan. Tambah penerangan pertama di atas.</div>';
+                    return;
                 }
+
+                descList.innerHTML = snap.docs.map(d => {
+                    const x = d.data();
+                    const date = x.createdAt?.toDate ? x.createdAt.toDate().toLocaleDateString('ms-MY') : '';
+                    const preview = stripHtml(x.html || '').trim().slice(0, 180) || '(tiada teks)';
+                    return `
+                        <div class="desc-item" data-id="${d.id}">
+                            <div class="desc-item-head">
+                                <h4>${escapeHtml(x.title || 'Tanpa Tajuk')}</h4>
+                                <span class="desc-item-date">${date}</span>
+                            </div>
+                            <div class="desc-preview">${escapeHtml(preview)}</div>
+                            <div class="desc-item-foot">
+                                <button type="button" class="btn-edit" data-edit="${d.id}">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/>
+                                    </svg>
+                                    Edit
+                                </button>
+                                <button type="button" class="btn-del" data-del="${d.id}">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/>
+                                    </svg>
+                                    Padam
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                descList.querySelectorAll('[data-edit]').forEach(btn => {
+                    btn.addEventListener('click', () => loadForEdit(btn.dataset.edit));
+                });
+                descList.querySelectorAll('[data-del]').forEach(btn => {
+                    btn.addEventListener('click', () => deleteDescription(btn.dataset.del));
+                });
             } catch (err) {
-                console.error('Load description error:', err);
+                console.error('Load desc error:', err);
+                descList.innerHTML = '<div class="empty-state">Gagal memuatkan penerangan.</div>';
             }
         }
 
-        // Simpan penerangan
+        // Load satu penerangan ke editor untuk edit
+        async function loadForEdit(id) {
+            try {
+                const snap = await getDoc(doc(db, 'penerangan', id));
+                if (!snap.exists()) return;
+                const x = snap.data();
+
+                editingId.value = id;
+                descTitle.value = x.title || '';
+                descEditor.innerHTML = x.html || '';
+                fontSelect.value = x.fontFamily || "'Plus Jakarta Sans', sans-serif";
+                sizeInput.value = x.fontSize || 15;
+                descAttachStatus.textContent = 'Editing penerangan sedia ada';
+
+                editorTitle.textContent = 'Edit Penerangan';
+                descBtnLabel.textContent = 'Simpan Perubahan';
+                descCancelBtn.style.display = 'inline-flex';
+
+                descForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                descTitle.focus();
+            } catch (err) {
+                console.error(err);
+                alertError('descErrorMsg','descErrorText','Gagal memuatkan untuk edit: ' + err.message);
+            }
+        }
+
+        // Cancel edit
+        descCancelBtn.addEventListener('click', resetEditor);
+
+        // Submit — tambah atau update
         descForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             clearAlerts();
+
+            const title = descTitle.value.trim();
             const html = descEditor.innerHTML.trim();
 
-            if (!html || html === '<br>') {
-                return alertError('descErrorMsg','descErrorText','Sila tulis penerangan terlebih dahulu.');
-            }
+            if (!title) return alertError('descErrorMsg','descErrorText','Sila masukkan tajuk penerangan.');
+            if (!html || html === '<br>') return alertError('descErrorMsg','descErrorText','Sila tulis kandungan penerangan.');
 
             descSaveBtn.disabled = true;
             descBtnLabel.innerHTML = '<span class="spinner"></span>Menyimpan...';
+
             try {
-                await setDoc(doc(db, 'penerangan', 'utama'), {
+                const data = {
+                    title,
                     html,
                     fontFamily: fontSelect.value,
                     fontSize: Number(sizeInput.value) || 15,
                     updatedAt: serverTimestamp()
-                }, { merge: true });
-                alertSuccess('descSuccessMsg','descSuccessText','Penerangan berjaya disimpan.');
+                };
+
+                if (editingId.value) {
+                    await updateDoc(doc(db, 'penerangan', editingId.value), data);
+                    alertSuccess('descSuccessMsg','descSuccessText','Penerangan berjaya dikemaskini.');
+                } else {
+                    await addDoc(collection(db, 'penerangan'), {
+                        ...data,
+                        createdAt: serverTimestamp()
+                    });
+                    alertSuccess('descSuccessMsg','descSuccessText','Penerangan baharu berjaya ditambah.');
+                }
+
+                resetEditor();
+                await loadDescriptions();
             } catch (err) {
                 console.error(err);
                 alertError('descErrorMsg','descErrorText','Ralat simpan: ' + err.message);
             } finally {
                 descSaveBtn.disabled = false;
-                descBtnLabel.textContent = 'Simpan Penerangan';
+                descBtnLabel.textContent = editingId.value ? 'Simpan Perubahan' : 'Tambah Penerangan';
             }
         });
 
+        // Padam
+        async function deleteDescription(id) {
+            if (!confirm('Padam penerangan ini? Tindakan tidak boleh dibatalkan.')) return;
+            try {
+                await deleteDoc(doc(db, 'penerangan', id));
+                await loadDescriptions();
+                if (editingId.value === id) resetEditor();
+            } catch (err) {
+                console.error(err);
+                alertError('descErrorMsg','descErrorText','Gagal padam: ' + err.message);
+            }
+        }
+
         // ============================================================
-        // BAHAGIAN 2 — Upload Pilihan Baju
+        // BAHAGIAN 2 — Upload Baju
         // ============================================================
         const imgDrop = $('imgDrop');
-        const bajuImageInput = $('bajuImageInput');
-        const dropInner = $('dropInner');
         const bajuName = $('bajuName');
         const bajuDesc = $('bajuDesc');
         const bajuForm = $('bajuForm');
@@ -701,13 +921,11 @@
         let selectedBajuFile = null;
         let previewUrl = null;
 
-        // Klik drop area = buka file picker
         imgDrop.addEventListener('click', (e) => {
             if (e.target.closest('.img-remove')) return;
-            bajuImageInput.click();
+            $('bajuImageInput')?.click();
         });
 
-        // Drag & drop
         ['dragover','dragenter'].forEach(ev => imgDrop.addEventListener(ev, (e) => {
             e.preventDefault(); imgDrop.style.borderColor = 'var(--brand-1)';
         }));
@@ -719,19 +937,17 @@
             if (file) handleBajuFile(file);
         });
 
-        bajuImageInput.addEventListener('change', (e) => {
-            const file = e.target.files?.[0];
-            if (file) handleBajuFile(file);
+        document.addEventListener('change', (e) => {
+            if (e.target && e.target.id === 'bajuImageInput') {
+                const file = e.target.files?.[0];
+                if (file) handleBajuFile(file);
+            }
         });
 
         function handleBajuFile(file) {
             clearAlerts();
-            if (!file.type.startsWith('image/')) {
-                return alertError('bajuErrorMsg','bajuErrorText','Fail bukan gambar.');
-            }
-            if (file.size > 5 * 1024 * 1024) {
-                return alertError('bajuErrorMsg','bajuErrorText','Gambar melebihi 5MB.');
-            }
+            if (!file.type.startsWith('image/')) return alertError('bajuErrorMsg','bajuErrorText','Fail bukan gambar.');
+            if (file.size > 5 * 1024 * 1024) return alertError('bajuErrorMsg','bajuErrorText','Gambar melebihi 5MB.');
             selectedBajuFile = file;
             if (previewUrl) URL.revokeObjectURL(previewUrl);
             previewUrl = URL.createObjectURL(file);
@@ -742,12 +958,6 @@
                 <button type="button" class="img-remove" id="imgRemoveBtn" title="Buang">×</button>
                 <input type="file" id="bajuImageInput" accept="image/*" hidden>
             `;
-            // re-bind input kalau perlu
-            const newInput = document.getElementById('bajuImageInput');
-            newInput?.addEventListener('change', (e) => {
-                const f = e.target.files?.[0];
-                if (f) handleBajuFile(f);
-            });
             document.getElementById('imgRemoveBtn')?.addEventListener('click', (ev) => {
                 ev.stopPropagation();
                 resetBajuImage();
@@ -760,7 +970,7 @@
             imgDrop.classList.remove('has-image');
             imgDrop.innerHTML = `
                 <input type="file" id="bajuImageInput" accept="image/*">
-                <div class="drop-inner" id="dropInner">
+                <div class="drop-inner">
                     <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
                     </svg>
@@ -768,14 +978,8 @@
                     <div>PNG, JPG, WEBP (maks 5MB)</div>
                 </div>
             `;
-            const newInput = document.getElementById('bajuImageInput');
-            newInput.addEventListener('change', (e) => {
-                const f = e.target.files?.[0];
-                if (f) handleBajuFile(f);
-            });
         }
 
-        // Reset form
         bajuResetBtn.addEventListener('click', () => {
             bajuName.value = '';
             bajuDesc.value = '';
@@ -783,11 +987,9 @@
             clearAlerts();
         });
 
-        // Submit baju
         bajuForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             clearAlerts();
-
             const name = bajuName.value.trim();
             const desc = bajuDesc.value.trim();
 
@@ -799,20 +1001,15 @@
             bajuBtnLabel.innerHTML = '<span class="spinner"></span>Memuat naik...';
 
             try {
-                // 1) Upload gambar ke Cloudinary
                 const img = await uploadToCloudinary(selectedBajuFile);
-
-                // 2) Simpan metadata ke Firestore
                 await addDoc(collection(db, 'pilihanBaju'), {
-                    name,
-                    description: desc,
+                    name, description: desc,
                     imageUrl: img.url,
                     imagePublicId: img.publicId,
                     width: img.width || null,
                     height: img.height || null,
                     createdAt: serverTimestamp()
                 });
-
                 alertSuccess('bajuSuccessMsg','bajuSuccessText','Baju berjaya dimuat naik.');
                 bajuName.value = '';
                 bajuDesc.value = '';
@@ -827,7 +1024,6 @@
             }
         });
 
-        // Load & papar senarai baju
         async function loadBajuList() {
             try {
                 const q = query(collection(db, 'pilihanBaju'), orderBy('createdAt', 'desc'));
@@ -849,16 +1045,15 @@
                                 <div class="bc-desc">${escapeHtml(b.description || '')}</div>
                                 <div class="bc-foot">
                                     <span class="bc-date">${date}</span>
-                                    <button type="button" class="btn-del" data-del="${d.id}" data-pid="${escapeHtml(b.imagePublicId || '')}">Padam</button>
+                                    <button type="button" class="btn-del-baju" data-del="${d.id}">Padam</button>
                                 </div>
                             </div>
                         </article>
                     `;
                 }).join('');
 
-                // Bind delete buttons
                 bajuList.querySelectorAll('[data-del]').forEach(btn => {
-                    btn.addEventListener('click', () => deleteBaju(btn.dataset.del, btn.dataset.pid));
+                    btn.addEventListener('click', () => deleteBaju(btn.dataset.del));
                 });
             } catch (err) {
                 console.error('Load baju list error:', err);
@@ -866,12 +1061,10 @@
             }
         }
 
-        async function deleteBaju(id, publicId) {
+        async function deleteBaju(id) {
             if (!confirm('Padam baju ini? Tindakan tidak boleh dibatalkan.')) return;
             try {
                 await deleteDoc(doc(db, 'pilihanBaju', id));
-                // Nota: pemadaman image dari Cloudinary perlukan signed API,
-                // jadi kita kekalkan gambar di Cloudinary (boleh dibersihkan manual).
                 await loadBajuList();
             } catch (err) {
                 console.error(err);
@@ -879,10 +1072,8 @@
             }
         }
 
-        // ============================================================
         // INIT
-        // ============================================================
-        loadDescription();
+        loadDescriptions();
         loadBajuList();
     </script>
 </body>
