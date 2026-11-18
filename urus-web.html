@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urus Web — Sistem Tempahan Baju</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #0f172a;
+            --muted: #64748b;
+            --line: #e2e8f0;
+            --card: #ffffff;
+            --brand-1: #6366f1;
+            --brand-2: #8b5cf6;
+            --brand-3: #ec4899;
+            --ok: #10b981;
+            --err: #ef4444;
+            --warn: #f59e0b;
+            --ring: rgba(99, 102, 241, 0.18);
+        }
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            color: var(--ink);
+            background:
+                radial-gradient(1000px 600px at 5% 0%, rgba(99, 102, 241, 0.20), transparent 60%),
+                radial-gradient(900px 600px at 95% 100%, rgba(236, 72, 153, 0.18), transparent 55%),
+                linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+            padding: 32px 24px 64px;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        /* ---- Topbar ---- */
+        .topbar {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 16px; margin-bottom: 28px; flex-wrap: wrap;
+        }
+        .topbar-left { display: flex; align-items: center; gap: 14px; }
+        .brand-icon {
+            width: 46px; height: 46px; border-radius: 14px;
+            display: grid; place-items: center;
+            background: linear-gradient(135deg, var(--brand-1), var(--brand-2) 55%, var(--brand-3));
+            box-shadow: 0 10px 20px -8px rgba(99,102,241,0.55);
+            color: #fff; flex-shrink: 0;
+        }
+        .topbar h1 { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
+        .topbar p { font-size: 13px; color: var(--muted); font-weight: 500; margin-top: 2px; }
+
+        .btn-back {
+            display: inline-flex; align-items: center; gap: 7px;
+            padding: 9px 14px; border-radius: 11px;
+            font-size: 13px; font-weight: 700; color: var(--muted);
+            background: #fff; border: 1.5px solid var(--line);
+            text-decoration: none; transition: border-color 0.2s, color 0.2s;
+        }
+        .btn-back:hover { border-color: #c7d2fe; color: #4f46e5; }
+
+        /* ---- Section ---- */
+        .section-title {
+            font-size: 12px; font-weight: 800; letter-spacing: 0.12em;
+            text-transform: uppercase; color: var(--muted);
+            margin: 0 0 14px 4px;
+        }
+
+        .panel {
+            background: var(--card); border: 1px solid var(--line);
+            border-radius: 20px; box-shadow: 0 10px 30px -18px rgba(15, 23, 42, 0.25);
+            overflow: hidden; margin-bottom: 32px;
+        }
+
+        .panel-head {
+            padding: 24px 26px 18px; border-bottom: 1px solid var(--line);
+            display: flex; align-items: flex-start; justify-content: space-between;
+            gap: 16px; flex-wrap: wrap;
+            background: linear-gradient(180deg, #fafbff, #fff);
+        }
+        .panel-head .ph-left { display: flex; align-items: center; gap: 14px; }
+        .panel-head .ph-icon {
+            width: 44px; height: 44px; border-radius: 12px;
+            display: grid; place-items: center;
+            background: linear-gradient(135deg, #eef2ff, #fdf2f8);
+            color: #6d28d9; border: 1px solid #e0e7ff; flex-shrink: 0;
+        }
+        .panel-head h2 { font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
+        .panel-head p { font-size: 13px; color: var(--muted); font-weight: 500; margin-top: 2px; }
+
+        .panel-body { padding: 24px 26px 28px; }
+
+        /* ---- Form ---- */
+        .field { margin-bottom: 18px; }
+        .field label {
+            display: block; font-size: 13px; font-weight: 700; margin-bottom: 8px;
+        }
+        .field input[type="text"],
+        .field textarea,
+        .field select {
+            width: 100%; padding: 13px 15px; font-size: 14.5px; font-weight: 500;
+            color: var(--ink); background: #f8fafc;
+            border: 1.5px solid var(--line); border-radius: 12px;
+            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+            font-family: inherit;
+        }
+        .field input:focus, .field textarea:focus, .field select:focus {
+            outline: none; background: #fff; border-color: var(--brand-1);
+            box-shadow: 0 0 0 4px var(--ring);
+        }
+        .field textarea { resize: vertical; min-height: 120px; }
+
+        .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        @media (max-width: 640px) { .field-row { grid-template-columns: 1fr; } }
+
+        /* ---- Toolbar editor ---- */
+        .editor-toolbar {
+            display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+            padding: 10px 12px; background: #f8fafc;
+            border: 1.5px solid var(--line); border-radius: 12px 12px 0 0;
+            border-bottom: none;
+        }
+        .editor-toolbar .tb-group {
+            display: flex; gap: 4px; align-items: center;
+            padding-right: 8px; border-right: 1px solid var(--line);
+        }
+        .editor-toolbar .tb-group:last-child { border-right: none; }
+        .editor-toolbar label {
+            font-size: 11.5px; font-weight: 700; color: var(--muted);
+            text-transform: uppercase; letter-spacing: 0.05em; margin: 0 4px 0 0;
+        }
+        .editor-toolbar select,
+        .editor-toolbar input[type="number"] {
+            padding: 6px 8px; font-size: 12.5px; font-weight: 600;
+            border: 1.5px solid var(--line); border-radius: 8px;
+            background: #fff; color: var(--ink); font-family: inherit;
+        }
+        .editor-toolbar select { min-width: 120px; }
+        .editor-toolbar input[type="number"] { width: 66px; }
+        .editor-toolbar button {
+            width: 30px; height: 30px; border-radius: 8px;
+            background: #fff; border: 1.5px solid var(--line);
+            cursor: pointer; display: grid; place-items: center;
+            font-size: 14px; font-weight: 700; color: var(--ink);
+            transition: background 0.15s, border-color 0.15s;
+            font-family: inherit;
+        }
+        .editor-toolbar button:hover { background: #eef2ff; border-color: #c7d2fe; }
+        .editor-toolbar button.active { background: #eef2ff; border-color: var(--brand-1); color: var(--brand-1); }
+
+        .editor-area {
+            width: 100%; min-height: 200px; padding: 16px;
+            font-size: 15px; line-height: 1.7; color: var(--ink);
+            background: #fff; border: 1.5px solid var(--line);
+            border-radius: 0 0 12px 12px;
+            outline: none; overflow-y: auto;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .editor-area:focus { border-color: var(--brand-1); box-shadow: 0 0 0 4px var(--ring); }
+        .editor-area:empty::before {
+            content: attr(data-placeholder);
+            color: #94a3b8; font-weight: 400;
+            pointer-events: none;
+        }
+        .editor-area img { max-width: 100%; height: auto; border-radius: 8px; margin: 8px 0; }
+
+        /* ---- Image attach ---- */
+        .image-attach {
+            display: flex; gap: 10px; align-items: center; margin-top: 10px; flex-wrap: wrap;
+        }
+        .btn-attach {
+            display: inline-flex; align-items: center; gap: 7px;
+            padding: 9px 14px; border-radius: 10px;
+            font-size: 13px; font-weight: 700;
+            color: #4f46e5; background: #eef2ff;
+            border: 1.5px solid #c7d2fe; cursor: pointer;
+            transition: background 0.15s, border-color 0.15s;
+        }
+        .btn-attach:hover { background: #e0e7ff; border-color: #a5b4fc; }
+        .btn-attach input[type="file"] { display: none; }
+        .attach-status { font-size: 12.5px; color: var(--muted); font-weight: 500; }
+
+        /* ---- Buttons ---- */
+        .form-actions { display: flex; gap: 12px; align-items: center; margin-top: 20px; flex-wrap: wrap; }
+
+        .btn-primary {
+            padding: 13px 24px; border: none; border-radius: 12px;
+            font-size: 14px; font-weight: 700; color: #fff; cursor: pointer;
+            background: linear-gradient(135deg, var(--brand-1), var(--brand-2) 55%, var(--brand-3));
+            background-size: 200% 200%;
+            transition: background-position 0.5s ease, transform 0.15s ease, box-shadow 0.2s ease;
+            box-shadow: 0 8px 18px -8px rgba(99, 102, 241, 0.6);
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            min-height: 46px;
+        }
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-1.5px); background-position: 100% 50%;
+            box-shadow: 0 14px 24px -10px rgba(139, 92, 246, 0.55);
+        }
+        .btn-primary:disabled { opacity: 0.75; cursor: not-allowed; transform: none; }
+
+        .btn-ghost {
+            padding: 13px 20px; border-radius: 12px;
+            font-size: 14px; font-weight: 700; color: var(--muted);
+            background: #fff; border: 1.5px solid var(--line); cursor: pointer;
+            transition: border-color 0.2s, color 0.2s;
+        }
+        .btn-ghost:hover { border-color: #c7d2fe; color: #4f46e5; }
+
+        .spinner {
+            width: 15px; height: 15px;
+            border: 2px solid rgba(255,255,255,0.35); border-top-color: #fff;
+            border-radius: 50%; animation: spin 0.7s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ---- Alerts ---- */
+        .alert {
+            display: none; align-items: flex-start; gap: 10px;
+            padding: 12px 14px; border-radius: 12px;
+            font-size: 13.5px; font-weight: 500; line-height: 1.5;
+            margin-top: 16px; animation: pop 0.25s ease;
+        }
+        .alert.show { display: flex; }
+        .alert svg { flex-shrink: 0; margin-top: 1px; }
+        .alert-error   { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+        .alert-success { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        @keyframes pop { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ---- Image preview (upload baju) ---- */
+        .img-drop {
+            position: relative; display: grid; place-items: center;
+            min-height: 180px; padding: 20px; text-align: center;
+            border: 2px dashed var(--line); border-radius: 14px;
+            background: #fafbff; cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+            overflow: hidden;
+        }
+        .img-drop:hover { border-color: var(--brand-1); background: #f5f3ff; }
+        .img-drop input[type="file"] { display: none; }
+        .img-drop .drop-inner { color: var(--muted); font-size: 13px; font-weight: 500; line-height: 1.6; }
+        .img-drop .drop-inner svg { color: #a5b4fc; margin-bottom: 8px; }
+        .img-drop.has-image { padding: 0; border-style: solid; border-color: var(--line); background: #fff; }
+        .img-drop img { width: 100%; max-height: 260px; object-fit: contain; display: block; }
+        .img-drop .img-remove {
+            position: absolute; top: 10px; right: 10px;
+            width: 28px; height: 28px; border-radius: 50%;
+            background: rgba(15,23,42,0.7); color: #fff; border: none;
+            cursor: pointer; display: grid; place-items: center;
+            font-size: 15px; font-weight: 700;
+        }
+
+        /* ---- Senarai baju ---- */
+        .baju-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 16px; margin-top: 28px;
+        }
+        .baju-card {
+            background: #fff; border: 1px solid var(--line);
+            border-radius: 16px; overflow: hidden;
+            box-shadow: 0 8px 20px -14px rgba(15,23,42,0.25);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex; flex-direction: column;
+        }
+        .baju-card:hover { transform: translateY(-3px); box-shadow: 0 16px 30px -18px rgba(99,102,241,0.4); }
+        .baju-card img { width: 100%; height: 160px; object-fit: cover; background: #f8fafc; display: block; }
+        .baju-card .bc-body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+        .baju-card .bc-name { font-size: 14.5px; font-weight: 800; }
+        .baju-card .bc-desc { font-size: 13px; color: var(--muted); font-weight: 500; line-height: 1.5; }
+        .baju-card .bc-foot {
+            margin-top: auto; padding-top: 10px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .baju-card .bc-date { font-size: 11.5px; color: #94a3b8; font-weight: 600; }
+        .btn-del {
+            padding: 6px 10px; border-radius: 8px;
+            background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca;
+            font-size: 12px; font-weight: 700; cursor: pointer;
+            transition: background 0.15s;
+        }
+        .btn-del:hover { background: #fee2e2; }
+
+        .empty-state {
+            grid-column: 1 / -1; padding: 26px; text-align: center;
+            border: 1.5px dashed var(--line); border-radius: 14px;
+            color: var(--muted); font-size: 13.5px; font-weight: 500; background: #fafbff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- ===== Topbar ===== -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <div class="brand-icon" aria-hidden="true">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 3l4 3-2.5 4L16 9v10a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V9L6.5 10 4 6l4-3c0 1.5 1.8 2.5 4 2.5S16 4.5 16 3z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1>Urus Web</h1>
+                    <p>Kemaskini penerangan & pilihan baju</p>
+                </div>
+            </div>
+            <a class="btn-back" href="admin.html">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+                </svg>
+                Kembali
+            </a>
+        </header>
+
+        <!-- ===== 1. Penerangan Tempahan Baju ===== -->
+        <p class="section-title">Bahagian 1 — Penerangan Tempahan Baju</p>
+        <section class="panel">
+            <div class="panel-head">
+                <div class="ph-left">
+                    <div class="ph-icon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Editor Penerangan</h2>
+                        <p>Tulis penerangan, pilih font & saiz, lampirkan gambar.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <form id="descForm" novalidate>
+                    <div class="field">
+                        <label>Toolbar Format</label>
+                        <div class="editor-toolbar">
+                            <div class="tb-group">
+                                <label for="fontSelect">Font</label>
+                                <select id="fontSelect">
+                                    <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans</option>
+                                    <option value="Arial, sans-serif">Arial</option>
+                                    <option value="'Times New Roman', serif">Times New Roman</option>
+                                    <option value="Georgia, serif">Georgia</option>
+                                    <option value="'Courier New', monospace">Courier New</option>
+                                    <option value="Verdana, sans-serif">Verdana</option>
+                                    <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
+                                </select>
+                            </div>
+                            <div class="tb-group">
+                                <label for="sizeInput">Saiz</label>
+                                <input type="number" id="sizeInput" min="10" max="72" value="15">
+                            </div>
+                            <div class="tb-group">
+                                <button type="button" data-cmd="bold" title="Bold"><b>B</b></button>
+                                <button type="button" data-cmd="italic" title="Italic"><i>I</i></button>
+                                <button type="button" data-cmd="underline" title="Underline"><u>U</u></button>
+                            </div>
+                            <div class="tb-group">
+                                <button type="button" data-cmd="justifyLeft" title="Kiri">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="19" y2="18"/></svg>
+                                </button>
+                                <button type="button" data-cmd="justifyCenter" title="Tengah">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+                                </button>
+                                <button type="button" data-cmd="justifyRight" title="Kanan">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="9" y1="12" x2="21" y2="12"/><line x1="5" y1="18" x2="21" y2="18"/></svg>
+                                </button>
+                            </div>
+                            <div class="tb-group">
+                                <button type="button" data-cmd="insertUnorderedList" title="Senarai bullet">•</button>
+                                <button type="button" data-cmd="insertOrderedList" title="Senarai nombor">1.</button>
+                            </div>
+                        </div>
+                        <div
+                            id="descEditor"
+                            class="editor-area"
+                            contenteditable="true"
+                            data-placeholder="Tulis penerangan tempahan baju di sini..."
+                        ></div>
+                    </div>
+
+                    <div class="image-attach">
+                        <label class="btn-attach">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+                            </svg>
+                            Lampirkan Gambar
+                            <input type="file" id="descImageInput" accept="image/*">
+                        </label>
+                        <span class="attach-status" id="descAttachStatus">Tiada gambar dilampirkan</span>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary" id="descSaveBtn">
+                            <span id="descBtnLabel">Simpan Penerangan</span>
+                        </button>
+                    </div>
+
+                    <div class="alert alert-error" id="descErrorMsg" role="alert">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                        <span id="descErrorText"></span>
+                    </div>
+                    <div class="alert alert-success" id="descSuccessMsg" role="status">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                        <span id="descSuccessText"></span>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- ===== 2. Upload Pilihan Baju ===== -->
+        <p class="section-title">Bahagian 2 — Upload Pilihan Baju</p>
+        <section class="panel">
+            <div class="panel-head">
+                <div class="ph-left">
+                    <div class="ph-icon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Tambah Pilihan Baju</h2>
+                        <p>Muat naik gambar baju bersama nama & deskripsi.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <form id="bajuForm" novalidate>
+                    <div class="field">
+                        <label>Gambar Baju</label>
+                        <div class="img-drop" id="imgDrop">
+                            <input type="file" id="bajuImageInput" accept="image/*">
+                            <div class="drop-inner" id="dropInner">
+                                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+                                </svg>
+                                <div><strong>Klik untuk pilih gambar</strong></div>
+                                <div>PNG, JPG, WEBP (maks 5MB)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="bajuName">Nama Baju</label>
+                        <input type="text" id="bajuName" placeholder="Contoh: Kemeja Lelaki Slim Fit" maxlength="100">
+                    </div>
+
+                    <div class="field">
+                        <label for="bajuDesc">Deskripsi Baju</label>
+                        <textarea id="bajuDesc" placeholder="Terangkan butiran baju — bahan, warna, saiz tersedia, dll." maxlength="500"></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary" id="bajuSaveBtn">
+                            <span id="bajuBtnLabel">Muat Naik Baju</span>
+                        </button>
+                        <button type="button" class="btn-ghost" id="bajuResetBtn">Reset</button>
+                    </div>
+
+                    <div class="alert alert-error" id="bajuErrorMsg" role="alert">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                        <span id="bajuErrorText"></span>
+                    </div>
+                    <div class="alert alert-success" id="bajuSuccessMsg" role="status">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                        <span id="bajuSuccessText"></span>
+                    </div>
+                </form>
+
+                <!-- Senarai baju -->
+                <div class="baju-grid" id="bajuList">
+                    <div class="empty-state">Memuatkan senarai baju...</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Firebase + Cloudinary -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import {
+            getFirestore, collection, doc, getDoc, getDocs, addDoc,
+            setDoc, deleteDoc, serverTimestamp, query, orderBy
+        } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        // ==== Firebase Config ====
+        const firebaseConfig = {
+            apiKey: "AIzaSyCByV68jqkMNmIlslrG9bxzbBo6qGYVT4c",
+            authDomain: "tempahan-baju-3fd4b.firebaseapp.com",
+            projectId: "tempahan-baju-3fd4b",
+            storageBucket: "tempahan-baju-3fd4b.firebasestorage.app",
+            messagingSenderId: "851807692918",
+            appId: "1:851807692918:web:22e7f2a1ff3222def3d757",
+            measurementId: "G-HYM6W4JNS9"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // ==== Cloudinary ====
+        const CLOUD_NAME = 'q9xbizqj';
+        const UPLOAD_PRESET = 'tempahan-baju';
+
+        async function uploadToCloudinary(file) {
+            const fd = new FormData();
+            fd.append('file', file);
+            fd.append('upload_preset', UPLOAD_PRESET);
+
+            const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
+                method: 'POST',
+                body: fd
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error?.message || 'Upload Cloudinary gagal');
+            return {
+                url: data.secure_url,
+                publicId: data.public_id,
+                width: data.width,
+                height: data.height
+            };
+        }
+
+        // ==== Helpers ====
+        const $ = (id) => document.getElementById(id);
+
+        function alertError(elId, textId, msg) {
+            $(elId).classList.add('show');
+            $(textId).textContent = msg;
+            clearTimeout(alertError._t);
+            alertError._t = setTimeout(() => $(elId).classList.remove('show'), 6000);
+        }
+        function alertSuccess(elId, textId, msg) {
+            $(elId).classList.add('show');
+            $(textId).textContent = msg;
+            clearTimeout(alertSuccess._t);
+            alertSuccess._t = setTimeout(() => $(elId).classList.remove('show'), 5000);
+        }
+        function clearAlerts() {
+            document.querySelectorAll('.alert').forEach(a => a.classList.remove('show'));
+        }
+        function escapeHtml(s) {
+            return String(s ?? '').replace(/[&<>"']/g, c => ({
+                '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+            }[c]));
+        }
+
+        // ============================================================
+        // BAHAGIAN 1 — Penerangan
+        // ============================================================
+        const descEditor = $('descEditor');
+        const fontSelect = $('fontSelect');
+        const sizeInput = $('sizeInput');
+        const descImageInput = $('descImageInput');
+        const descAttachStatus = $('descAttachStatus');
+        const descForm = $('descForm');
+        const descSaveBtn = $('descSaveBtn');
+        const descBtnLabel = $('descBtnLabel');
+
+        // Toolbar format
+        document.querySelectorAll('.editor-toolbar button[data-cmd]').forEach(btn => {
+            btn.addEventListener('mousedown', (e) => e.preventDefault());
+            btn.addEventListener('click', () => {
+                document.execCommand(btn.dataset.cmd, false, null);
+                descEditor.focus();
+                updateToolbarState();
+            });
+        });
+
+        // Font family
+        fontSelect.addEventListener('change', () => {
+            descEditor.focus();
+            document.execCommand('fontName', false, fontSelect.value);
+        });
+
+        // Font size — guna execCommand fontSize dengan value 1..7 (legacy), 
+        // tapi kita apply juga style terus untuk saiz lebih fleksibel
+        sizeInput.addEventListener('change', () => {
+            const px = Math.max(10, Math.min(72, Number(sizeInput.value) || 15));
+            sizeInput.value = px;
+            descEditor.focus();
+            // Gunakan fontSize legacy supaya selection kekal
+            // (untuk saiz custom, kita wrap dengan span melalui execCommand + normalize)
+            document.execCommand('fontSize', false, '7');
+            // Selepas itu, tukar semua <font size="7"> terpilih ke span dgn font-size px
+            descEditor.querySelectorAll('font[size="7"]').forEach(f => {
+                const span = document.createElement('span');
+                span.style.fontSize = px + 'px';
+                span.innerHTML = f.innerHTML;
+                f.replaceWith(span);
+            });
+        });
+
+        // Update toolbar active state
+        function updateToolbarState() {
+            document.querySelectorAll('.editor-toolbar button[data-cmd]').forEach(btn => {
+                const cmd = btn.dataset.cmd;
+                try {
+                    if (['bold','italic','underline','insertUnorderedList','insertOrderedList'].includes(cmd)) {
+                        btn.classList.toggle('active', document.queryCommandState(cmd));
+                    }
+                } catch (_) {}
+            });
+        }
+        descEditor.addEventListener('keyup', updateToolbarState);
+        descEditor.addEventListener('mouseup', updateToolbarState);
+
+        // Attach gambar ke editor
+        descImageInput.addEventListener('change', async (e) => {
+            const file = e.target.files?.[0];
+            if (!file) return;
+            if (!file.type.startsWith('image/')) {
+                return alertError('descErrorMsg','descErrorText','Fail bukan gambar.');
+            }
+            if (file.size > 5 * 1024 * 1024) {
+                return alertError('descErrorMsg','descErrorText','Gambar melebihi 5MB.');
+            }
+
+            descAttachStatus.textContent = 'Memuat naik ke Cloudinary...';
+            try {
+                const { url } = await uploadToCloudinary(file);
+                descEditor.focus();
+                document.execCommand('insertHTML', false, `<img src="${url}" alt="gambar penerangan">`);
+                descAttachStatus.textContent = '✓ Gambar dilampirkan';
+                descImageInput.value = '';
+            } catch (err) {
+                console.error(err);
+                descAttachStatus.textContent = 'Gagal muat naik';
+                alertError('descErrorMsg','descErrorText', 'Gagal muat naik: ' + err.message);
+            }
+        });
+
+        // Load penerangan sedia ada
+        async function loadDescription() {
+            try {
+                const snap = await getDoc(doc(db, 'penerangan', 'utama'));
+                if (snap.exists()) {
+                    const d = snap.data();
+                    descEditor.innerHTML = d.html || '';
+                    if (d.fontFamily) fontSelect.value = d.fontFamily;
+                    if (d.fontSize) sizeInput.value = d.fontSize;
+                }
+            } catch (err) {
+                console.error('Load description error:', err);
+            }
+        }
+
+        // Simpan penerangan
+        descForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            clearAlerts();
+            const html = descEditor.innerHTML.trim();
+
+            if (!html || html === '<br>') {
+                return alertError('descErrorMsg','descErrorText','Sila tulis penerangan terlebih dahulu.');
+            }
+
+            descSaveBtn.disabled = true;
+            descBtnLabel.innerHTML = '<span class="spinner"></span>Menyimpan...';
+            try {
+                await setDoc(doc(db, 'penerangan', 'utama'), {
+                    html,
+                    fontFamily: fontSelect.value,
+                    fontSize: Number(sizeInput.value) || 15,
+                    updatedAt: serverTimestamp()
+                }, { merge: true });
+                alertSuccess('descSuccessMsg','descSuccessText','Penerangan berjaya disimpan.');
+            } catch (err) {
+                console.error(err);
+                alertError('descErrorMsg','descErrorText','Ralat simpan: ' + err.message);
+            } finally {
+                descSaveBtn.disabled = false;
+                descBtnLabel.textContent = 'Simpan Penerangan';
+            }
+        });
+
+        // ============================================================
+        // BAHAGIAN 2 — Upload Pilihan Baju
+        // ============================================================
+        const imgDrop = $('imgDrop');
+        const bajuImageInput = $('bajuImageInput');
+        const dropInner = $('dropInner');
+        const bajuName = $('bajuName');
+        const bajuDesc = $('bajuDesc');
+        const bajuForm = $('bajuForm');
+        const bajuSaveBtn = $('bajuSaveBtn');
+        const bajuBtnLabel = $('bajuBtnLabel');
+        const bajuResetBtn = $('bajuResetBtn');
+        const bajuList = $('bajuList');
+
+        let selectedBajuFile = null;
+        let previewUrl = null;
+
+        // Klik drop area = buka file picker
+        imgDrop.addEventListener('click', (e) => {
+            if (e.target.closest('.img-remove')) return;
+            bajuImageInput.click();
+        });
+
+        // Drag & drop
+        ['dragover','dragenter'].forEach(ev => imgDrop.addEventListener(ev, (e) => {
+            e.preventDefault(); imgDrop.style.borderColor = 'var(--brand-1)';
+        }));
+        ['dragleave','drop'].forEach(ev => imgDrop.addEventListener(ev, (e) => {
+            e.preventDefault(); imgDrop.style.borderColor = '';
+        }));
+        imgDrop.addEventListener('drop', (e) => {
+            const file = e.dataTransfer.files?.[0];
+            if (file) handleBajuFile(file);
+        });
+
+        bajuImageInput.addEventListener('change', (e) => {
+            const file = e.target.files?.[0];
+            if (file) handleBajuFile(file);
+        });
+
+        function handleBajuFile(file) {
+            clearAlerts();
+            if (!file.type.startsWith('image/')) {
+                return alertError('bajuErrorMsg','bajuErrorText','Fail bukan gambar.');
+            }
+            if (file.size > 5 * 1024 * 1024) {
+                return alertError('bajuErrorMsg','bajuErrorText','Gambar melebihi 5MB.');
+            }
+            selectedBajuFile = file;
+            if (previewUrl) URL.revokeObjectURL(previewUrl);
+            previewUrl = URL.createObjectURL(file);
+
+            imgDrop.classList.add('has-image');
+            imgDrop.innerHTML = `
+                <img src="${previewUrl}" alt="preview">
+                <button type="button" class="img-remove" id="imgRemoveBtn" title="Buang">×</button>
+                <input type="file" id="bajuImageInput" accept="image/*" hidden>
+            `;
+            // re-bind input kalau perlu
+            const newInput = document.getElementById('bajuImageInput');
+            newInput?.addEventListener('change', (e) => {
+                const f = e.target.files?.[0];
+                if (f) handleBajuFile(f);
+            });
+            document.getElementById('imgRemoveBtn')?.addEventListener('click', (ev) => {
+                ev.stopPropagation();
+                resetBajuImage();
+            });
+        }
+
+        function resetBajuImage() {
+            selectedBajuFile = null;
+            if (previewUrl) { URL.revokeObjectURL(previewUrl); previewUrl = null; }
+            imgDrop.classList.remove('has-image');
+            imgDrop.innerHTML = `
+                <input type="file" id="bajuImageInput" accept="image/*">
+                <div class="drop-inner" id="dropInner">
+                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                    <div><strong>Klik untuk pilih gambar</strong></div>
+                    <div>PNG, JPG, WEBP (maks 5MB)</div>
+                </div>
+            `;
+            const newInput = document.getElementById('bajuImageInput');
+            newInput.addEventListener('change', (e) => {
+                const f = e.target.files?.[0];
+                if (f) handleBajuFile(f);
+            });
+        }
+
+        // Reset form
+        bajuResetBtn.addEventListener('click', () => {
+            bajuName.value = '';
+            bajuDesc.value = '';
+            resetBajuImage();
+            clearAlerts();
+        });
+
+        // Submit baju
+        bajuForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            clearAlerts();
+
+            const name = bajuName.value.trim();
+            const desc = bajuDesc.value.trim();
+
+            if (!selectedBajuFile) return alertError('bajuErrorMsg','bajuErrorText','Sila pilih gambar baju.');
+            if (!name) return alertError('bajuErrorMsg','bajuErrorText','Sila masukkan nama baju.');
+            if (!desc) return alertError('bajuErrorMsg','bajuErrorText','Sila masukkan deskripsi baju.');
+
+            bajuSaveBtn.disabled = true;
+            bajuBtnLabel.innerHTML = '<span class="spinner"></span>Memuat naik...';
+
+            try {
+                // 1) Upload gambar ke Cloudinary
+                const img = await uploadToCloudinary(selectedBajuFile);
+
+                // 2) Simpan metadata ke Firestore
+                await addDoc(collection(db, 'pilihanBaju'), {
+                    name,
+                    description: desc,
+                    imageUrl: img.url,
+                    imagePublicId: img.publicId,
+                    width: img.width || null,
+                    height: img.height || null,
+                    createdAt: serverTimestamp()
+                });
+
+                alertSuccess('bajuSuccessMsg','bajuSuccessText','Baju berjaya dimuat naik.');
+                bajuName.value = '';
+                bajuDesc.value = '';
+                resetBajuImage();
+                await loadBajuList();
+            } catch (err) {
+                console.error(err);
+                alertError('bajuErrorMsg','bajuErrorText','Ralat: ' + err.message);
+            } finally {
+                bajuSaveBtn.disabled = false;
+                bajuBtnLabel.textContent = 'Muat Naik Baju';
+            }
+        });
+
+        // Load & papar senarai baju
+        async function loadBajuList() {
+            try {
+                const q = query(collection(db, 'pilihanBaju'), orderBy('createdAt', 'desc'));
+                const snap = await getDocs(q);
+
+                if (snap.empty) {
+                    bajuList.innerHTML = '<div class="empty-state">Belum ada pilihan baju. Muat naik yang pertama di atas.</div>';
+                    return;
+                }
+
+                bajuList.innerHTML = snap.docs.map(d => {
+                    const b = d.data();
+                    const date = b.createdAt?.toDate ? b.createdAt.toDate().toLocaleDateString('ms-MY') : '';
+                    return `
+                        <article class="baju-card" data-id="${d.id}">
+                            <img src="${escapeHtml(b.imageUrl || '')}" alt="${escapeHtml(b.name || '')}">
+                            <div class="bc-body">
+                                <div class="bc-name">${escapeHtml(b.name || 'Tanpa Nama')}</div>
+                                <div class="bc-desc">${escapeHtml(b.description || '')}</div>
+                                <div class="bc-foot">
+                                    <span class="bc-date">${date}</span>
+                                    <button type="button" class="btn-del" data-del="${d.id}" data-pid="${escapeHtml(b.imagePublicId || '')}">Padam</button>
+                                </div>
+                            </div>
+                        </article>
+                    `;
+                }).join('');
+
+                // Bind delete buttons
+                bajuList.querySelectorAll('[data-del]').forEach(btn => {
+                    btn.addEventListener('click', () => deleteBaju(btn.dataset.del, btn.dataset.pid));
+                });
+            } catch (err) {
+                console.error('Load baju list error:', err);
+                bajuList.innerHTML = '<div class="empty-state">Gagal memuatkan senarai baju.</div>';
+            }
+        }
+
+        async function deleteBaju(id, publicId) {
+            if (!confirm('Padam baju ini? Tindakan tidak boleh dibatalkan.')) return;
+            try {
+                await deleteDoc(doc(db, 'pilihanBaju', id));
+                // Nota: pemadaman image dari Cloudinary perlukan signed API,
+                // jadi kita kekalkan gambar di Cloudinary (boleh dibersihkan manual).
+                await loadBajuList();
+            } catch (err) {
+                console.error(err);
+                alertError('bajuErrorMsg','bajuErrorText','Gagal padam: ' + err.message);
+            }
+        }
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        loadDescription();
+        loadBajuList();
+    </script>
+</body>
+</html>
