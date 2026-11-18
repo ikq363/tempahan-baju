@@ -20,6 +20,7 @@
             --brand-3: #ec4899;
             --ok: #10b981;
             --err: #ef4444;
+            --warn: #f59e0b;
             --ring: rgba(99, 102, 241, 0.18);
         }
 
@@ -103,7 +104,7 @@
             margin: 0 0 14px 4px;
         }
 
-        /* ---- Menu cards (Urus Web & Urus Tempahan) ---- */
+        /* ---- Menu cards ---- */
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -151,6 +152,15 @@
             color: #4f46e5;
         }
 
+        /* Varian warna ikon untuk Cadangan */
+        .menu-card.mc-saran .mc-icon {
+            background: #fff7ed;
+            color: #ea580c;
+        }
+        .menu-card.mc-saran::before {
+            background: linear-gradient(90deg, #f59e0b, #ec4899);
+        }
+
         .menu-card h3 {
             font-size: 16.5px;
             font-weight: 800;
@@ -191,7 +201,16 @@
             box-shadow: 0 14px 24px -10px rgba(139, 92, 246, 0.55);
         }
 
-        /* ---- Urus Pengguna panel ---- */
+        .mc-saran .btn-view {
+            background: linear-gradient(135deg, #f59e0b, #ec4899);
+            background-size: 200% 200%;
+            box-shadow: 0 8px 18px -8px rgba(236, 72, 153, 0.55);
+        }
+        .mc-saran .btn-view:hover {
+            box-shadow: 0 14px 24px -10px rgba(236, 72, 153, 0.6);
+        }
+
+        /* ---- Panel ---- */
         .panel {
             background: var(--card);
             border: 1px solid var(--line);
@@ -252,64 +271,88 @@
             white-space: nowrap;
         }
 
-        /* form */
         .panel-body { padding: 24px 26px 28px; }
 
-        .form-row {
-            display: grid;
-            grid-template-columns: 1.4fr 1fr auto;
-            gap: 14px;
-            align-items: end;
+        /* ---- Bulk form ---- */
+        .field-label-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
         }
 
-        .field label {
-            display: block;
+        .field-label-row label {
             font-size: 13px;
             font-weight: 700;
-            margin-bottom: 8px;
         }
 
-        .field input {
+        .format-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #6d28d9;
+            background: #f5f3ff;
+            border: 1px solid #ddd6fe;
+            padding: 5px 10px;
+            border-radius: 999px;
+        }
+
+        .format-chip code {
+            font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+            font-size: 11.5px;
+            background: #ede9fe;
+            padding: 1px 5px;
+            border-radius: 4px;
+        }
+
+        .bulk-textarea {
             width: 100%;
-            padding: 13px 15px;
-            font-size: 14.5px;
-            font-weight: 600;
+            min-height: 180px;
+            padding: 14px 16px;
+            font-size: 13.5px;
+            font-weight: 500;
+            line-height: 1.75;
+            font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
             color: var(--ink);
             background: #f8fafc;
             border: 1.5px solid var(--line);
-            border-radius: 12px;
+            border-radius: 14px;
+            resize: vertical;
             transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
         }
 
-        .field input::placeholder {
-            font-weight: 500; color: #94a3b8;
+        .bulk-textarea::placeholder {
+            color: #94a3b8;
+            font-weight: 400;
         }
 
-        .field input:focus {
+        .bulk-textarea:focus {
             outline: none;
             background: #fff;
             border-color: var(--brand-1);
             box-shadow: 0 0 0 4px var(--ring);
         }
 
-        .field input#matricInput {
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-        }
-
-        .field input#matricInput::placeholder {
-            text-transform: none; letter-spacing: normal;
+        .form-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 16px;
+            flex-wrap: wrap;
         }
 
         .btn-submit {
-            padding: 13px 22px;
+            padding: 13px 24px;
             border: none;
             border-radius: 12px;
             font-size: 14px;
             font-weight: 700;
             color: #fff;
             cursor: pointer;
-            white-space: nowrap;
             background: linear-gradient(135deg, var(--brand-1), var(--brand-2) 55%, var(--brand-3));
             background-size: 200% 200%;
             transition: background-position 0.5s ease, transform 0.15s ease, box-shadow 0.2s ease;
@@ -327,8 +370,30 @@
             box-shadow: 0 14px 24px -10px rgba(139, 92, 246, 0.55);
         }
 
-        .btn-submit:disabled {
-            opacity: 0.75; cursor: not-allowed; transform: none;
+        .btn-submit:disabled { opacity: 0.75; cursor: not-allowed; transform: none; }
+
+        .btn-ghost {
+            padding: 13px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--muted);
+            background: #fff;
+            border: 1.5px solid var(--line);
+            cursor: pointer;
+            transition: border-color 0.2s, color 0.2s, background 0.2s;
+        }
+
+        .btn-ghost:hover { border-color: #c7d2fe; color: #4f46e5; background: #fafbff; }
+
+        .hint-line {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 10px;
+            font-size: 12px;
+            color: var(--muted);
+            font-weight: 500;
         }
 
         .spinner {
@@ -349,7 +414,7 @@
             border-radius: 12px;
             font-size: 13.5px;
             font-weight: 500;
-            line-height: 1.45;
+            line-height: 1.5;
             margin-top: 16px;
             animation: pop 0.25s ease;
         }
@@ -357,6 +422,15 @@
         .alert svg { flex-shrink: 0; margin-top: 1px; }
         .alert-error   { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
         .alert-success { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        .alert-warn    { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+
+        .alert ul {
+            margin: 6px 0 0 18px;
+            padding: 0;
+            font-size: 12.5px;
+            font-weight: 500;
+        }
+        .alert li { margin-bottom: 2px; }
 
         @keyframes pop {
             from { opacity: 0; transform: translateY(-4px); }
@@ -364,7 +438,7 @@
         }
 
         /* user list */
-        .user-list-wrap { margin-top: 26px; }
+        .user-list-wrap { margin-top: 30px; }
 
         .user-list-head {
             display: flex;
@@ -437,11 +511,10 @@
             font-size: 13.5px;
             font-weight: 500;
             background: #fafbff;
+            grid-column: 1 / -1;
         }
 
         @media (max-width: 720px) {
-            .form-row { grid-template-columns: 1fr; }
-            .btn-submit { width: 100%; }
             .topbar h1 { font-size: 18px; }
         }
     </style>
@@ -512,6 +585,26 @@
                     </svg>
                 </a>
             </article>
+
+            <!-- Cadangan (BARU) -->
+            <article class="menu-card mc-saran">
+                <div class="mc-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 18h6"/><path d="M10 22h4"/>
+                        <path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V18h6v-1.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3>Cadangan</h3>
+                    <p>Semak cadangan, maklum balas dan idea penambahbaikan daripada pengguna.</p>
+                </div>
+                <a class="btn-view" href="cadangan.html">
+                    Lihat Halaman
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                    </svg>
+                </a>
+            </article>
         </div>
 
         <!-- ===== Urus Pengguna ===== -->
@@ -527,8 +620,8 @@
                         </svg>
                     </div>
                     <div>
-                        <h2>Daftar Pengguna Baharu</h2>
-                        <p>Tambah pengguna supaya boleh log masuk ke sistem.</p>
+                        <h2>Daftar Pengguna (Pukal)</h2>
+                        <p>Tambah ramai pengguna sekali gus — satu baris untuk seorang.</p>
                     </div>
                 </div>
                 <span class="count-pill" id="userCount">
@@ -541,31 +634,45 @@
 
             <div class="panel-body">
                 <form id="registerForm" novalidate>
-                    <div class="form-row">
-                        <div class="field">
-                            <label for="nameInput">Nama Penuh</label>
-                            <input type="text" id="nameInput" placeholder="Contoh: Ali bin Abu" autocomplete="off" required>
-                        </div>
-                        <div class="field">
-                            <label for="matricInput">Nombor Matriks</label>
-                            <input type="text" id="matricInput" placeholder="Contoh: A123456" maxlength="20" autocomplete="off" spellcheck="false" required>
-                        </div>
+                    <div class="field-label-row">
+                        <label for="bulkInput">Senarai Pengguna</label>
+                        <span class="format-chip">
+                            Format: <code>NAMA , NOMBOR MATRIKS</code>
+                        </span>
+                    </div>
+
+                    <textarea
+                        id="bulkInput"
+                        class="bulk-textarea"
+                        spellcheck="false"
+                        placeholder="Ali bin Abu , A123456&#10;Siti binti Ahmad , B654321&#10;Muthu a/l Raj , C789012"
+                    ></textarea>
+
+                    <div class="hint-line">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+                        </svg>
+                        Satu baris = satu pengguna. Pisahkan nama dan matriks dengan koma. Baris kosong akan diabaikan.
+                    </div>
+
+                    <div class="form-actions">
                         <button type="submit" class="btn-submit" id="registerBtn">
-                            <span id="btnLabel">Daftar</span>
+                            <span id="btnLabel">Daftar Semua</span>
                         </button>
+                        <button type="button" class="btn-ghost" id="clearBtn">Kosongkan</button>
                     </div>
 
                     <div class="alert alert-error" id="errorMsg" role="alert">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
                         </svg>
-                        <span id="errorText"></span>
+                        <div id="errorText"></div>
                     </div>
                     <div class="alert alert-success" id="successMsg" role="status">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
                         </svg>
-                        <span id="successText"></span>
+                        <div id="successText"></div>
                     </div>
                 </form>
 
@@ -604,10 +711,9 @@
 
         // ==== Refs ====
         const registerForm = document.getElementById('registerForm');
-        const nameInput = document.getElementById('nameInput');
-        const matricInput = document.getElementById('matricInput');
+        const bulkInput = document.getElementById('bulkInput');
         const registerBtn = document.getElementById('registerBtn');
-        const btnLabel = document.getElementById('btnLabel');
+        const clearBtn = document.getElementById('clearBtn');
         const errorMsg = document.getElementById('errorMsg');
         const errorText = document.getElementById('errorText');
         const successMsg = document.getElementById('successMsg');
@@ -615,37 +721,75 @@
         const userList = document.getElementById('userList');
         const userCountNum = document.getElementById('userCountNum');
 
-        // Auto-format matric: uppercase & alphanumeric sahaja
-        matricInput.addEventListener('input', (e) => {
-            e.target.value = e.target.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
-        });
-        matricInput.addEventListener('keydown', (e) => {
-            if (['-', ' ', '_'].includes(e.key)) e.preventDefault();
-        });
-
-        function showError(msg) {
+        function showError(html) {
             successMsg.classList.remove('show');
-            errorText.textContent = msg;
+            errorText.innerHTML = html;
             errorMsg.classList.add('show');
             clearTimeout(showError._t);
-            showError._t = setTimeout(() => errorMsg.classList.remove('show'), 5000);
+            showError._t = setTimeout(() => errorMsg.classList.remove('show'), 8000);
         }
-        function showSuccess(msg) {
+        function showSuccess(html) {
             errorMsg.classList.remove('show');
-            successText.textContent = msg;
+            successText.innerHTML = html;
             successMsg.classList.add('show');
             clearTimeout(showSuccess._t);
-            showSuccess._t = setTimeout(() => successMsg.classList.remove('show'), 4000);
+            showSuccess._t = setTimeout(() => successMsg.classList.remove('show'), 6000);
         }
         function setLoading(on) {
             registerBtn.disabled = on;
             registerBtn.innerHTML = on
-                ? '<span class="spinner"></span><span>Menyimpan...</span>'
-                : '<span id="btnLabel">Daftar</span>';
+                ? '<span class="spinner"></span><span>Memproses...</span>'
+                : '<span id="btnLabel">Daftar Semua</span>';
         }
 
         function initials(name) {
             return (name || '?').trim().split(/\s+/).slice(0, 2).map(w => w[0]).join('').toUpperCase();
+        }
+
+        function escapeHtml(s) {
+            return String(s).replace(/[&<>"']/g, c => ({
+                '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+            }[c]));
+        }
+
+        // ==== Parse input pukal ====
+        function parseBulk(text) {
+            const lines = text.split(/\r?\n/);
+            const valid = [];
+            const invalid = [];
+
+            lines.forEach((raw, idx) => {
+                const line = raw.trim();
+                if (!line) return;
+
+                const lineNo = idx + 1;
+                const parts = line.split(',').map(s => s.trim());
+
+                if (parts.length < 2 || !parts[0] || !parts[1]) {
+                    invalid.push({ lineNo, reason: 'Format salah (perlu: NAMA , NOMBOR MATRIKS)', raw: line });
+                    return;
+                }
+
+                const name = parts[0].replace(/\s+/g, ' ').trim();
+                const matric = parts[1].replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+
+                if (name.length < 3) {
+                    invalid.push({ lineNo, reason: 'Nama terlalu pendek', raw: line });
+                    return;
+                }
+                if (!matric) {
+                    invalid.push({ lineNo, reason: 'Nombor matriks kosong', raw: line });
+                    return;
+                }
+                if (!/^[A-Z0-9]+$/.test(matric) || matric.length < 5) {
+                    invalid.push({ lineNo, reason: 'Format matriks tidak sah', raw: line });
+                    return;
+                }
+
+                valid.push({ name, matric, lineNo });
+            });
+
+            return { valid, invalid };
         }
 
         // ==== Load senarai pengguna ====
@@ -654,10 +798,7 @@
                 const snap = await getDocs(collection(db, 'users'));
                 const users = [];
                 snap.forEach(d => users.push({ id: d.id, ...d.data() }));
-
-                // susun ikut nama
                 users.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-
                 userCountNum.textContent = users.length;
 
                 if (users.length === 0) {
@@ -680,58 +821,103 @@
             }
         }
 
-        function escapeHtml(s) {
-            return String(s).replace(/[&<>"']/g, c => ({
-                '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-            }[c]));
-        }
-
-        // ==== Daftar pengguna ====
+        // ==== Daftar pukal ====
         registerForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const name = nameInput.value.trim();
-            const matric = matricInput.value.trim();
+            const text = bulkInput.value.trim();
+            if (!text) {
+                return showError('Sila masukkan sekurang-kurangnya satu baris pengguna.');
+            }
 
-            if (!name) return showError('Sila masukkan nama penuh.');
-            if (name.length < 3) return showError('Nama terlalu pendek. Sila masukkan nama penuh.');
-            if (!matric) return showError('Sila masukkan nombor matriks.');
-            if (!/^[A-Z0-9]+$/.test(matric)) return showError('Format matriks tidak sah. Hanya huruf besar dan nombor.');
-            if (matric.length < 5) return showError('Nombor matriks terlalu pendek.');
+            const { valid, invalid } = parseBulk(text);
+
+            if (valid.length === 0) {
+                const list = invalid.map(i => `<li>Baris ${i.lineNo}: ${escapeHtml(i.reason)} — <em>${escapeHtml(i.raw)}</em></li>`).join('');
+                return showError(`Tiada baris sah untuk didaftarkan.<ul>${list}</ul>`);
+            }
 
             setLoading(true);
             try {
-                // Semak duplikasi matriks
-                const dupQ = query(collection(db, 'users'), where('matric', '==', matric));
-                const dupSnap = await getDocs(dupQ);
-
-                if (!dupSnap.empty) {
-                    showError(`Nombor matriks ${matric} sudah didaftarkan.`);
-                    return;
-                }
-
-                await addDoc(collection(db, 'users'), {
-                    name,
-                    matric,
-                    role: 'user',
-                    createdAt: serverTimestamp()
+                const existingSnap = await getDocs(collection(db, 'users'));
+                const existing = new Set();
+                existingSnap.forEach(d => {
+                    const m = d.data().matric;
+                    if (m) existing.add(String(m).toUpperCase());
                 });
 
-                showSuccess(`Pengguna "${name}" (${matric}) berjaya didaftarkan.`);
-                nameInput.value = '';
-                matricInput.value = '';
-                nameInput.focus();
+                const successList = [];
+                const duplicateList = [];
+                const failedList = [];
+                const seenInBatch = new Set();
+
+                for (const item of valid) {
+                    if (existing.has(item.matric)) {
+                        duplicateList.push({ ...item, reason: 'Sudah wujud dalam sistem' });
+                        continue;
+                    }
+                    if (seenInBatch.has(item.matric)) {
+                        duplicateList.push({ ...item, reason: 'Berulang dalam senarai' });
+                        continue;
+                    }
+                    seenInBatch.add(item.matric);
+
+                    try {
+                        await addDoc(collection(db, 'users'), {
+                            name: item.name,
+                            matric: item.matric,
+                            role: 'user',
+                            createdAt: serverTimestamp()
+                        });
+                        successList.push(item);
+                    } catch (err) {
+                        console.error('Add user error:', err);
+                        failedList.push({ ...item, reason: err.message || 'Ralat simpan' });
+                    }
+                }
+
+                const parts = [];
+                if (successList.length > 0) {
+                    parts.push(`<strong>${successList.length} pengguna berjaya didaftarkan.</strong>`);
+                }
+                if (duplicateList.length > 0) {
+                    const li = duplicateList.map(d => `<li>Baris ${d.lineNo}: ${escapeHtml(d.name)} (${escapeHtml(d.matric)}) — ${escapeHtml(d.reason)}</li>`).join('');
+                    parts.push(`<div style="margin-top:6px"><strong>${duplicateList.length} diabaikan (duplikasi):</strong><ul>${li}</ul></div>`);
+                }
+                if (invalid.length > 0) {
+                    const li = invalid.map(i => `<li>Baris ${i.lineNo}: ${escapeHtml(i.reason)} — <em>${escapeHtml(i.raw)}</em></li>`).join('');
+                    parts.push(`<div style="margin-top:6px"><strong>${invalid.length} baris tidak sah:</strong><ul>${li}</ul></div>`);
+                }
+                if (failedList.length > 0) {
+                    const li = failedList.map(f => `<li>Baris ${f.lineNo}: ${escapeHtml(f.name)} (${escapeHtml(f.matric)}) — ${escapeHtml(f.reason)}</li>`).join('');
+                    parts.push(`<div style="margin-top:6px"><strong>${failedList.length} gagal disimpan:</strong><ul>${li}</ul></div>`);
+                }
+
+                const summary = parts.join('');
+
+                if (successList.length > 0) {
+                    showSuccess(summary);
+                    if (duplicateList.length === 0 && invalid.length === 0 && failedList.length === 0) {
+                        bulkInput.value = '';
+                    }
+                } else {
+                    showError(summary || 'Tiada pengguna berjaya didaftarkan.');
+                }
 
                 await loadUsers();
             } catch (err) {
-                console.error('Register error:', err);
-                showError('Ralat sistem: ' + (err.message || 'Sila cuba lagi.'));
+                console.error('Bulk register error:', err);
+                showError('Ralat sistem: ' + escapeHtml(err.message || 'Sila cuba lagi.'));
             } finally {
                 setLoading(false);
             }
         });
 
-        // Initial load
+        clearBtn.addEventListener('click', () => {
+            bulkInput.value = '';
+            bulkInput.focus();
+        });
+
         loadUsers();
     </script>
 </body>
