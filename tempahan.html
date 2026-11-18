@@ -130,10 +130,10 @@
 
         .section-block { margin-bottom: 32px; }
 
-        /* ============ PENERANGAN (compact) ============ */
+        /* ============ PENERANGAN ============ */
         .desc-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 14px;
         }
 
@@ -150,7 +150,7 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
-            transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
 
         .desc-card:hover {
@@ -188,18 +188,12 @@
             margin-top: 2px;
         }
 
+        /* Tiada max-height / overflow — semua kandungan nampak penuh */
         .desc-card-body {
             font-size: 13.5px;
             line-height: 1.65;
             color: #334155;
-            max-height: 220px;
-            overflow-y: auto;
-            padding-right: 4px;
-            scrollbar-width: thin;
         }
-
-        .desc-card-body::-webkit-scrollbar { width: 5px; }
-        .desc-card-body::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
 
         .desc-card-body img {
             max-width: 100%;
@@ -212,7 +206,6 @@
         }
         .desc-card-body img:hover { transform: scale(1.01); }
 
-        /* supaya teks dari admin tak terlalu besar */
         .desc-card-body p { margin: 0 0 8px; }
         .desc-card-body p:last-child { margin-bottom: 0; }
         .desc-card-body ul, .desc-card-body ol { margin: 6px 0 8px 20px; }
@@ -273,10 +266,7 @@
             flex-shrink: 0;
         }
 
-        .cadangan-content {
-            flex: 1;
-            min-width: 0;
-        }
+        .cadangan-content { flex: 1; min-width: 0; }
 
         .cadangan-content h3 {
             font-size: 15.5px;
@@ -634,7 +624,7 @@
             .section-block { margin-bottom: 26px; }
             .desc-card { padding: 16px 17px; border-radius: 14px; }
             .desc-card h3 { font-size: 13.5px; }
-            .desc-card-body { font-size: 13px; max-height: 180px; }
+            .desc-card-body { font-size: 13px; }
             .baju-card .bc-body { padding: 10px 12px 12px; }
             .baju-card .bc-name { font-size: 13px; }
             .baju-card .bc-desc { font-size: 11.5px; }
@@ -754,7 +744,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
         import {
             getFirestore, doc, getDoc, collection, getDocs,
-            query, where, runTransaction, serverTimestamp, orderBy, onSnapshot
+            runTransaction, serverTimestamp, orderBy, onSnapshot
         } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
         // ==== Firebase Config ====
@@ -814,7 +804,7 @@
         });
 
         // ============================================================
-        // BAHAGIAN 1 — Penerangan (BANYAK, COMPACT)
+        // BAHAGIAN 1 — Penerangan (BANYAK, NAMPAK PENUH)
         // ============================================================
         async function loadDescriptions() {
             try {
@@ -850,7 +840,7 @@
                         </div>
                     `;
 
-                    // Body
+                    // Body — semua kandungan nampak penuh
                     const body = document.createElement('div');
                     body.className = 'desc-card-body';
                     // hadkan saiz font supaya tak gedabak walaupun admin set besar
@@ -858,12 +848,9 @@
                     if (x.fontFamily) body.style.fontFamily = x.fontFamily;
                     body.innerHTML = x.html || '';
 
-                    // Override saiz imej supaya tak terlalu besar
                     body.querySelectorAll('img').forEach(img => {
-                        img.style.maxHeight = '200px';
-                        img.style.width = 'auto';
                         img.style.maxWidth = '100%';
-                        img.style.objectFit = 'contain';
+                        img.style.height = 'auto';
                         img.style.cursor = 'zoom-in';
                         img.addEventListener('click', () => openLightbox(img.src));
                     });
