@@ -49,50 +49,28 @@
             margin-bottom: 28px;
             flex-wrap: wrap;
         }
-        .topbar-left {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
+        .topbar-left { display: flex; align-items: center; gap: 14px; }
         .brand-icon {
             width: 46px; height: 46px;
             border-radius: 14px;
             display: grid; place-items: center;
             background: linear-gradient(135deg, var(--brand-1), var(--brand-2) 55%, var(--brand-3));
             box-shadow: 0 10px 20px -8px rgba(99, 102, 241, 0.55);
-            color: #fff;
-            flex-shrink: 0;
+            color: #fff; flex-shrink: 0;
         }
-        .topbar h1 {
-            font-size: 20px;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            line-height: 1.2;
-        }
-        .topbar p {
-            font-size: 13px;
-            color: var(--muted);
-            font-weight: 500;
-            margin-top: 2px;
-        }
+        .topbar h1 { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
+        .topbar p { font-size: 13px; color: var(--muted); font-weight: 500; margin-top: 2px; }
 
         .btn-back {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            padding: 9px 14px;
-            border-radius: 11px;
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--muted);
-            background: #fff;
-            border: 1.5px solid var(--line);
-            text-decoration: none;
-            transition: border-color 0.2s, color 0.2s;
+            display: inline-flex; align-items: center; gap: 7px;
+            padding: 9px 14px; border-radius: 11px;
+            font-size: 13px; font-weight: 700; color: var(--muted);
+            background: #fff; border: 1.5px solid var(--line);
+            text-decoration: none; transition: border-color 0.2s, color 0.2s;
         }
         .btn-back:hover { border-color: #c7d2fe; color: #4f46e5; }
 
-        /* ============ PROGRESS INDICATOR ============ */
+        /* ============ PROGRESS BAR ============ */
         .progress-bar {
             display: flex;
             align-items: center;
@@ -118,10 +96,8 @@
             width: 30px; height: 30px;
             border-radius: 50%;
             display: grid; place-items: center;
-            font-size: 13px;
-            font-weight: 800;
-            background: #f1f5f9;
-            color: #94a3b8;
+            font-size: 13px; font-weight: 800;
+            background: #f1f5f9; color: #94a3b8;
             border: 2px solid #e2e8f0;
             flex-shrink: 0;
             transition: background 0.2s, border-color 0.2s, color 0.2s;
@@ -132,13 +108,9 @@
             color: #fff;
         }
         .progress-step .progress-label {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--muted);
+            font-size: 13px; font-weight: 700; color: var(--muted);
         }
-        .progress-step.done .progress-label {
-            color: var(--ink);
-        }
+        .progress-step.done .progress-label { color: var(--ink); }
 
         .progress-line {
             flex: 1;
@@ -155,7 +127,6 @@
             grid-template-columns: 1fr;
             gap: 18px;
         }
-
         @media (min-width: 720px) {
             .status-grid { grid-template-columns: 1fr 1fr; }
         }
@@ -173,13 +144,11 @@
             transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
             overflow: hidden;
         }
-
         .status-card:hover {
             transform: translateY(-3px);
             border-color: #c7d2fe;
             box-shadow: 0 20px 40px -20px rgba(99, 102, 241, 0.4);
         }
-
         .status-card.done {
             border-color: #a7f3d0;
             box-shadow: 0 10px 30px -18px rgba(16, 185, 129, 0.35);
@@ -189,7 +158,6 @@
             box-shadow: 0 20px 40px -20px rgba(16, 185, 129, 0.5);
         }
 
-        /* Top stripe */
         .status-card::before {
             content: "";
             position: absolute;
@@ -202,7 +170,6 @@
             background: linear-gradient(90deg, var(--ok), #34d399);
         }
 
-        /* Card head */
         .sc-head {
             display: flex;
             align-items: flex-start;
@@ -213,59 +180,42 @@
             width: 48px; height: 48px;
             border-radius: 14px;
             display: grid; place-items: center;
-            background: #eef2ff;
-            color: #4f46e5;
+            background: #eef2ff; color: #4f46e5;
             border: 1px solid #c7d2fe;
             flex-shrink: 0;
         }
         .status-card.done .sc-icon {
-            background: #ecfdf5;
-            color: #059669;
-            border-color: #a7f3d0;
+            background: #ecfdf5; color: #059669; border-color: #a7f3d0;
         }
 
         .sc-title-wrap { flex: 1; min-width: 0; }
 
         .sc-title {
-            font-size: 17px;
-            font-weight: 800;
-            letter-spacing: -0.01em;
-            line-height: 1.3;
+            font-size: 17px; font-weight: 800;
+            letter-spacing: -0.01em; line-height: 1.3;
         }
         .sc-desc {
-            font-size: 13px;
-            color: var(--muted);
-            font-weight: 500;
-            margin-top: 3px;
-            line-height: 1.5;
+            font-size: 13px; color: var(--muted);
+            font-weight: 500; margin-top: 3px; line-height: 1.5;
         }
 
-        /* Status badge */
         .sc-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
-            border-radius: 999px;
-            font-size: 12px;
-            font-weight: 700;
-            align-self: flex-start;
-            white-space: nowrap;
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 6px 12px; border-radius: 999px;
+            font-size: 12px; font-weight: 700;
+            align-self: flex-start; white-space: nowrap;
         }
         .sc-status.pending {
-            color: #b91c1c;
-            background: #fef2f2;
-            border: 1px solid #fecaca;
+            color: #b91c1c; background: #fef2f2; border: 1px solid #fecaca;
+        }
+        .sc-status.waiting {
+            color: #92400e; background: #fffbeb; border: 1px solid #fde68a;
         }
         .sc-status.complete {
-            color: #047857;
-            background: #ecfdf5;
-            border: 1px solid #a7f3d0;
+            color: #047857; background: #ecfdf5; border: 1px solid #a7f3d0;
         }
-
         .sc-status svg { flex-shrink: 0; }
 
-        /* Info tambahan */
         .sc-info {
             display: flex;
             flex-direction: column;
@@ -276,45 +226,31 @@
             border: 1px solid var(--line);
         }
         .sc-info-row {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-            font-size: 12.5px;
+            display: flex; justify-content: space-between;
+            gap: 10px; font-size: 12.5px;
         }
-        .sc-info-row .label {
-            color: var(--muted);
-            font-weight: 600;
-        }
+        .sc-info-row .label { color: var(--muted); font-weight: 600; }
         .sc-info-row .value {
-            color: var(--ink);
-            font-weight: 700;
+            color: var(--ink); font-weight: 700;
             text-align: right;
         }
 
-        /* Buttons */
         .sc-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: auto;
-            padding-top: 4px;
+            display: flex; gap: 10px;
+            margin-top: auto; padding-top: 4px;
         }
 
         .btn-view {
             flex: 1;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+            display: inline-flex; align-items: center; justify-content: center;
             gap: 8px;
             padding: 12px 18px;
-            border-radius: 12px;
-            border: none;
-            font-size: 14px;
-            font-weight: 700;
+            border-radius: 12px; border: none;
+            font-size: 14px; font-weight: 700;
             color: #fff;
             background: linear-gradient(135deg, var(--brand-1), var(--brand-2) 55%, var(--brand-3));
             background-size: 200% 200%;
-            cursor: pointer;
-            text-decoration: none;
+            cursor: pointer; text-decoration: none;
             transition: background-position 0.5s ease, transform 0.15s ease, box-shadow 0.2s ease;
             box-shadow: 0 8px 18px -8px rgba(99, 102, 241, 0.6);
             min-height: 46px;
@@ -326,8 +262,7 @@
         }
 
         .status-card.done .btn-view {
-            background: #fff;
-            color: #047857;
+            background: #fff; color: #047857;
             border: 1.5px solid #a7f3d0;
             box-shadow: none;
         }
@@ -337,14 +272,27 @@
             transform: translateY(-1px);
         }
 
-        /* Loading skeleton */
-        .skeleton {
-            background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            border-radius: 8px;
+        /* Debug */
+        .debug-box {
+            display: none;
+            margin-top: 24px;
+            padding: 14px 16px;
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            border-radius: 12px;
+            font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+            font-size: 11.5px;
+            line-height: 1.7;
+            color: #475569;
+            white-space: pre-wrap;
+            word-break: break-all;
         }
-        @keyframes shimmer { to { background-position: -200% 0; } }
+        .debug-box.show { display: block; }
+        .debug-box .dbg-title {
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 6px;
+        }
 
         /* Toast */
         .toast {
@@ -353,22 +301,18 @@
             transform: translateX(-50%) translateY(20px);
             padding: 13px 20px;
             border-radius: 12px;
-            font-size: 13.5px;
-            font-weight: 600;
-            color: #fff;
-            background: #0f172a;
+            font-size: 13.5px; font-weight: 600;
+            color: #fff; background: #0f172a;
             box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4);
             opacity: 0; pointer-events: none;
             transition: opacity 0.25s, transform 0.25s;
             z-index: 1100;
-            max-width: 90vw;
-            text-align: center;
+            max-width: 90vw; text-align: center;
         }
         .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
         .toast.error { background: #dc2626; }
         .toast.success { background: #059669; }
 
-        /* Responsive */
         @media (max-width: 640px) {
             body { padding: 16px 14px 64px; }
             .topbar h1 { font-size: 18px; }
@@ -421,7 +365,7 @@
         <!-- ===== Status cards ===== -->
         <div class="status-grid">
 
-            <!-- ============ KAD 1: TEMPAH BAJU ============ -->
+            <!-- KAD 1: TEMPAH BAJU -->
             <article class="status-card" id="cardTempah">
                 <div class="sc-head">
                     <div class="sc-icon">
@@ -444,12 +388,20 @@
 
                 <div class="sc-info" id="infoTempah" style="display:none;">
                     <div class="sc-info-row">
+                        <span class="label">Nombor</span>
+                        <span class="value" id="infoTempahNombor">—</span>
+                    </div>
+                    <div class="sc-info-row">
                         <span class="label">Saiz</span>
                         <span class="value" id="infoTempahSaiz">—</span>
                     </div>
                     <div class="sc-info-row">
-                        <span class="label">Kuantiti</span>
-                        <span class="value" id="infoTempahQty">—</span>
+                        <span class="label">Jenis Baju</span>
+                        <span class="value" id="infoTempahJenis">—</span>
+                    </div>
+                    <div class="sc-info-row">
+                        <span class="label">Harga</span>
+                        <span class="value" id="infoTempahHarga">—</span>
                     </div>
                     <div class="sc-info-row">
                         <span class="label">Tarikh Tempah</span>
@@ -467,7 +419,7 @@
                 </div>
             </article>
 
-            <!-- ============ KAD 2: PEMBAYARAN ============ -->
+            <!-- KAD 2: PEMBAYARAN -->
             <article class="status-card" id="cardBayar">
                 <div class="sc-head">
                     <div class="sc-icon">
@@ -513,6 +465,12 @@
                 </div>
             </article>
         </div>
+
+        <!-- Debug (untuk troubleshooting) -->
+        <div class="debug-box" id="debugBox">
+            <div class="dbg-title">🔍 Debug Info</div>
+            <div id="debugContent">—</div>
+        </div>
     </div>
 
     <!-- Toast -->
@@ -522,8 +480,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
         import {
-            getFirestore, doc, getDoc, collection, getDocs,
-            query, where, orderBy, limit
+            getFirestore, collection, getDocs, query, where
         } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
         // ==== Firebase Config ====
@@ -557,15 +514,21 @@
         const infoTempah = document.getElementById('infoTempah');
         const infoBayar = document.getElementById('infoBayar');
         const btnTempah = document.getElementById('btnTempah');
-        const btnTempahText = document.getElementById('btnTempahText');
         const btnBayar = document.getElementById('btnBayar');
-        const btnBayarText = document.getElementById('btnBayarText');
         const step1 = document.getElementById('step1');
         const step2 = document.getElementById('step2');
         const step1Num = document.getElementById('step1Num');
         const step2Num = document.getElementById('step2Num');
         const line1 = document.getElementById('line1');
         const toast = document.getElementById('toast');
+        const debugBox = document.getElementById('debugBox');
+        const debugContent = document.getElementById('debugContent');
+
+        const debugLines = [];
+        function logDebug(msg) {
+            debugLines.push(msg);
+            debugContent.textContent = debugLines.join('\n');
+        }
 
         function showToast(msg, type = 'info') {
             toast.textContent = msg;
@@ -575,150 +538,191 @@
         }
 
         function formatDate(ts) {
-            if (!ts?.toDate) return '';
-            return ts.toDate().toLocaleDateString('ms-MY', { day:'numeric', month:'short', year:'numeric' });
+            if (!ts) return '—';
+            try {
+                if (ts.toDate) return ts.toDate().toLocaleDateString('ms-MY', { day:'numeric', month:'short', year:'numeric' });
+                if (ts.seconds) return new Date(ts.seconds * 1000).toLocaleDateString('ms-MY', { day:'numeric', month:'short', year:'numeric' });
+                if (typeof ts === 'string') return new Date(ts).toLocaleDateString('ms-MY', { day:'numeric', month:'short', year:'numeric' });
+                if (ts instanceof Date) return ts.toLocaleDateString('ms-MY', { day:'numeric', month:'short', year:'numeric' });
+            } catch (_) {}
+            return '—';
         }
 
-        function setDone(el) {
-            el.classList.remove('pending');
-            el.classList.add('complete');
-        }
-        function setPending(el) {
-            el.classList.remove('complete');
-            el.classList.add('pending');
+        function formatRM(n) {
+            return 'RM ' + (Number(n) || 0).toFixed(2);
         }
 
         // ============================================================
         // SEMAK STATUS TEMPAHAN
-        // Collection: tempahan — { matric, saiz, kuantiti, ... }
+        // Guna query tanpa orderBy dulu (lebih toleran pada data lama),
+        // kemudian sort manual di client.
         // ============================================================
         async function checkTempahan() {
+            logDebug(`[tempahan] Mencari matric = "${session.matric}"`);
             try {
+                // Query TANPA orderBy — elak error kalau ada dokumen tanpa field createdAt
                 const q = query(
                     collection(db, 'tempahan'),
-                    where('matric', '==', session.matric),
-                    orderBy('createdAt', 'desc'),
-                    limit(1)
+                    where('matric', '==', session.matric)
                 );
                 const snap = await getDocs(q);
 
-                if (!snap.empty) {
-                    const tempahan = snap.docs[0].data();
+                logDebug(`[tempahan] Dijumpai: ${snap.size} dokumen`);
 
-                    // Status selesai
-                    cardTempah.classList.add('done');
-                    setDone(statusTempah);
-                    statusTempah.innerHTML = `
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="20 6 9 17 4 12"/>
-                        </svg>
-                        <span>Selesai</span>
-                    `;
-
-                    // Tunjuk info
-                    infoTempah.style.display = 'flex';
-                    document.getElementById('infoTempahSaiz').textContent = tempahan.saiz || '—';
-                    document.getElementById('infoTempahQty').textContent = tempahan.kuantiti || '—';
-                    document.getElementById('infoTempahDate').textContent = formatDate(tempahan.createdAt) || '—';
-
-                    // Butang tukar
-                    btnTempah.href = 'tempah-baju.html';
-                    btnTempahText.textContent = 'Lihat Tempahan';
-                    btnTempah.innerHTML = `
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                            <circle cx="12" cy="12" r="3"/>
-                        </svg>
-                        <span>Lihat Tempahan</span>
-                    `;
-
-                    // Progress
-                    step1.classList.add('done');
-                    step1Num.innerHTML = '✓';
-                    line1.classList.add('done');
-
-                    return true;
+                if (snap.empty) {
+                    logDebug('[tempahan] Tiada dokumen untuk matric ini.');
+                    return false;
                 }
-                return false;
+
+                // Ambil yang terbaru (sort manual)
+                const docs = [];
+                snap.forEach(d => docs.push({ id: d.id, ...d.data() }));
+                docs.sort((a, b) => {
+                    const ta = a.createdAt?.toMillis?.() || (a.createdAt?.seconds ? a.createdAt.seconds * 1000 : 0);
+                    const tb = b.createdAt?.toMillis?.() || (b.createdAt?.seconds ? b.createdAt.seconds * 1000 : 0);
+                    return tb - ta;
+                });
+                const t = docs[0];
+
+                logDebug(`[tempahan] Data: nama=${t.nama}, nombor=${t.nombor}, saiz=${t.saiz}, jenis=${t.jenis}, harga=${t.harga}`);
+
+                // Update kad
+                cardTempah.classList.add('done');
+                statusTempah.classList.remove('pending');
+                statusTempah.classList.add('complete');
+                statusTempah.innerHTML = `
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    <span>Selesai</span>
+                `;
+
+                // Tunjuk info
+                infoTempah.style.display = 'flex';
+                document.getElementById('infoTempahNombor').textContent = t.nombor || '—';
+                document.getElementById('infoTempahSaiz').textContent = t.saiz || '—';
+                document.getElementById('infoTempahJenis').textContent = t.jenis || '—';
+                document.getElementById('infoTempahHarga').textContent = formatRM(t.harga);
+                document.getElementById('infoTempahDate').textContent = formatDate(t.createdAt);
+
+                // Butang tukar
+                btnTempah.innerHTML = `
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                    <span>Lihat Tempahan</span>
+                `;
+
+                // Progress
+                step1.classList.add('done');
+                step1Num.innerHTML = '✓';
+                line1.classList.add('done');
+
+                return true;
             } catch (err) {
                 console.error('Check tempahan error:', err);
-                showToast('Gagal menyemak status tempahan.', 'error');
+                logDebug(`[tempahan] ERROR: ${err.message}`);
+                showToast('Gagal menyemak status tempahan: ' + err.message, 'error');
                 return false;
             }
         }
 
         // ============================================================
         // SEMAK STATUS PEMBAYARAN
-        // Collection: pembayaran — { matric, jumlah, status, ... }
         // ============================================================
         async function checkPembayaran() {
+            logDebug(`[pembayaran] Mencari matric = "${session.matric}"`);
             try {
                 const q = query(
                     collection(db, 'pembayaran'),
-                    where('matric', '==', session.matric),
-                    orderBy('createdAt', 'desc'),
-                    limit(1)
+                    where('matric', '==', session.matric)
                 );
                 const snap = await getDocs(q);
 
-                if (!snap.empty) {
-                    const bayar = snap.docs[0].data();
-                    const statusBayar = (bayar.status || '').toLowerCase();
+                logDebug(`[pembayaran] Dijumpai: ${snap.size} dokumen`);
 
-                    // Kalau status "selesai"/"verified" → tick hijau
-                    // Kalau status "pending"/"menunggu" → tunjuk info tapi tak tick
-                    const isSelesai = statusBayar === 'selesai' || statusBayar === 'verified' || statusBayar === 'approved';
-
-                    if (isSelesai) {
-                        cardBayar.classList.add('done');
-                        setDone(statusBayar);
-                        statusBayar.innerHTML = `
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            <span>Selesai</span>
-                        `;
-
-                        step2.classList.add('done');
-                        step2Num.innerHTML = '✓';
-                    } else {
-                        // Pending — ada hantar tapi belum verify
-                        setPending(statusBayar);
-                        statusBayar.innerHTML = `
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-                            </svg>
-                            <span>Menunggu Semakan</span>
-                        `;
-                    }
-
-                    // Tunjuk info
-                    infoBayar.style.display = 'flex';
-                    document.getElementById('infoBayarJumlah').textContent = bayar.jumlah ? 'RM ' + Number(bayar.jumlah).toFixed(2) : '—';
-                    document.getElementById('infoBayarStatus').textContent = isSelesai ? 'Disahkan' : 'Menunggu';
-                    document.getElementById('infoBayarDate').textContent = formatDate(bayar.createdAt) || '—';
-
-                    // Butang
-                    btnBayar.href = 'pembayaran.html';
-                    btnBayar.innerHTML = isSelesai ? `
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                            <circle cx="12" cy="12" r="3"/>
-                        </svg>
-                        <span>Lihat Pembayaran</span>
-                    ` : `
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
-                        </svg>
-                        <span>Lihat Status</span>
-                    `;
-
-                    return isSelesai;
+                if (snap.empty) {
+                    logDebug('[pembayaran] Tiada dokumen untuk matric ini.');
+                    return false;
                 }
-                return false;
+
+                // Ambil yang terbaru
+                const docs = [];
+                snap.forEach(d => docs.push({ id: d.id, ...d.data() }));
+                docs.sort((a, b) => {
+                    const ta = a.createdAt?.toMillis?.() || (a.createdAt?.seconds ? a.createdAt.seconds * 1000 : 0);
+                    const tb = b.createdAt?.toMillis?.() || (b.createdAt?.seconds ? b.createdAt.seconds * 1000 : 0);
+                    return tb - ta;
+                });
+                const p = docs[0];
+
+                const statusRaw = (p.status || '').toLowerCase().trim();
+                logDebug(`[pembayaran] Status mentah: "${statusRaw}", jumlah: ${p.jumlah}, slipUrl: ${p.slipUrl ? 'ADA' : 'TIADA'}`);
+
+                const isSelesai = ['selesai', 'verified', 'approved', 'paid', 'lulus'].includes(statusRaw);
+                const isPending = ['pending', 'menunggu', 'waiting', 'semakan'].includes(statusRaw);
+
+                // Update kad ikut status
+                if (isSelesai) {
+                    cardBayar.classList.add('done');
+                    statusBayar.classList.remove('pending', 'waiting');
+                    statusBayar.classList.add('complete');
+                    statusBayar.innerHTML = `
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        <span>Selesai</span>
+                    `;
+                    step2.classList.add('done');
+                    step2Num.innerHTML = '✓';
+                } else if (isPending) {
+                    cardBayar.classList.remove('done');
+                    statusBayar.classList.remove('pending', 'complete');
+                    statusBayar.classList.add('waiting');
+                    statusBayar.innerHTML = `
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        <span>Menunggu Semakan</span>
+                    `;
+                } else {
+                    cardBayar.classList.remove('done');
+                    statusBayar.classList.remove('complete', 'waiting');
+                    statusBayar.classList.add('pending');
+                    statusBayar.innerHTML = `
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                        </svg>
+                        <span>Belum Dibayar</span>
+                    `;
+                }
+
+                // Tunjuk info
+                infoBayar.style.display = 'flex';
+                document.getElementById('infoBayarJumlah').textContent = formatRM(p.jumlah);
+                document.getElementById('infoBayarStatus').textContent = isSelesai ? 'Disahkan' : isPending ? 'Menunggu' : (p.status || '—');
+                document.getElementById('infoBayarDate').textContent = formatDate(p.createdAt);
+
+                // Butang
+                btnBayar.innerHTML = isSelesai ? `
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                    <span>Lihat Pembayaran</span>
+                ` : `
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
+                    </svg>
+                    <span>Lihat Status</span>
+                `;
+
+                return isSelesai;
             } catch (err) {
                 console.error('Check pembayaran error:', err);
-                showToast('Gagal menyemak status pembayaran.', 'error');
+                logDebug(`[pembayaran] ERROR: ${err.message}`);
+                showToast('Gagal menyemak status pembayaran: ' + err.message, 'error');
                 return false;
             }
         }
@@ -727,13 +731,25 @@
         // INIT
         // ============================================================
         (async function init() {
+            logDebug(`Session matric: "${session.matric}"`);
+            logDebug(`Session name: "${session.name}"`);
+            logDebug('---');
+
             const tempahDone = await checkTempahan();
             const bayarDone = await checkPembayaran();
 
-            // Kalau dah selesai semua, tunjuk toast
+            logDebug('---');
+            logDebug(`Tempah selesai: ${tempahDone}`);
+            logDebug(`Bayar selesai: ${bayarDone}`);
+
             if (tempahDone && bayarDone) {
                 showToast('Tempahan anda telah selesai sepenuhnya! 🎉', 'success');
+            } else if (tempahDone) {
+                showToast('Tempahan direkodkan. Sila teruskan pembayaran.', 'info');
             }
+
+            // Tunjuk debug box (boleh comment kalau tak perlu)
+            debugBox.classList.add('show');
         })();
     </script>
 </body>
